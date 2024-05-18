@@ -2,9 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz/page/LoginPage.dart';
-import 'package:quizz/page/provider/DarkmodeProvider.dart';
-import 'package:quizz/page/provider/TimerProvider.dart';
-import 'package:quizz/page/provider/providerUser.dart';
+import 'package:quizz/provider/DarkmodeProvider.dart';
+import 'package:quizz/provider/TimerProvider.dart';
+import 'package:quizz/provider/providerUser.dart';
 
 void main() {
   

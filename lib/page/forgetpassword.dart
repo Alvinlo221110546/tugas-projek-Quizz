@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz/page/LoginPage.dart';
-import 'package:quizz/page/provider/providerUser.dart';
+import 'package:quizz/provider/providerUser.dart';
+
 
 class forgotPasswordPage extends StatefulWidget {
   const forgotPasswordPage({super.key});
