@@ -3,18 +3,20 @@ import 'package:provider/provider.dart';
 import 'package:quizz/page/LoginPage.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 
-
-class forgotPasswordPage extends StatefulWidget {
-  const forgotPasswordPage({super.key});
+class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
 
   @override
-  _forgotPasswordState createState() => _forgotPasswordState();
+  _ChangePasswordState createState() => _ChangePasswordState();
 }
 
-class _forgotPasswordState extends State {
+class _ChangePasswordState extends State {
+  TextEditingController old_password = TextEditingController(text: "");
   TextEditingController new_password = TextEditingController(text: '');
   TextEditingController confirm_new_password = TextEditingController(text: '');
-  bool _showConfirmPassError = false;
+  bool _showNewPassError = false;
+  bool _showOldPassError = false;
+  bool _obscureOldText = true;
   bool _obscureNewText = true;
   bool _obscureConfirmText = true;
 
@@ -23,7 +25,7 @@ class _forgotPasswordState extends State {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          'Forgot Password',
+          'Change Password',
           style: const TextStyle(
             color: Colors.white,
           ),
@@ -31,12 +33,42 @@ class _forgotPasswordState extends State {
         backgroundColor: Colors.purple,
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: Center( 
+      body: Center(
         child: Padding(
           padding: EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center, 
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              TextFormField(
+                controller: old_password,
+                decoration: InputDecoration(
+                  labelText: 'Current Password',
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                  prefixIcon: Icon(Icons.lock),
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _obscureOldText = !_obscureOldText;
+                      });
+                    },
+                    icon: Icon(
+                      _obscureOldText ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.grey,
+                    ),
+                  ),
+                  hintText: "Fill your old password",
+                  errorText: _showOldPassError ? "Wrong password" : null,
+                ),
+                obscureText: _obscureOldText,
+                onChanged: (text) {
+                  setState(() {
+                    _showOldPassError = false;
+                  });
+                },
+              ),
+              SizedBox(height: 16.0),
               TextFormField(
                 controller: new_password,
                 decoration: InputDecoration(
@@ -57,7 +89,6 @@ class _forgotPasswordState extends State {
                     ),
                   ),
                   hintText: "Fill your new password",
-                
                 ),
                 obscureText: _obscureNewText,
               ),
@@ -77,20 +108,21 @@ class _forgotPasswordState extends State {
                         });
                       },
                       icon: Icon(
-                        _obscureConfirmText ? Icons.visibility : Icons.visibility_off,
+                        _obscureConfirmText
+                            ? Icons.visibility
+                            : Icons.visibility_off,
                         color: Colors.grey,
                       ),
                     ),
                     hintText: "Fill again your new password",
-                    
-                    errorText: _showConfirmPassError
+                    errorText: _showNewPassError
                         ? "Password not same with the new password"
                         : null,
                   ),
                   obscureText: _obscureConfirmText,
                   onChanged: (text) {
                     setState(() {
-                      _showConfirmPassError = false;
+                      _showNewPassError = false;
                     });
                   }),
               SizedBox(height: 60.0),
@@ -102,16 +134,26 @@ class _forgotPasswordState extends State {
                           Provider.of<ProfileProvider>(context, listen: false);
                       bool sameNewPassword =
                           new_password.text == confirm_new_password.text;
-
-                      if (sameNewPassword) {
-                        profileProvider.forgotPassword(0, new_password.text);
-                        setState(() {
-                        });
-                        Navigator.of(context).pushReplacement(
-                            MaterialPageRoute(builder: (context) => LoginPage()));
+                      bool validatePass = old_password.text ==
+                          profileProvider.account[0].password;
+                      if (validatePass) {
+                        if (sameNewPassword) {
+                          profileProvider.changePassword(
+                              0, old_password.text, new_password.text);
+                          setState(() {
+                            _showNewPassError = true;
+                          });
+                          Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                  builder: (context) => LoginPage()));
+                        } else {
+                          setState(() {
+                            _showNewPassError = true;
+                          });
+                        }
                       } else {
                         setState(() {
-                          _showConfirmPassError = true;
+                          _showNewPassError = true;
                         });
                       }
                     },
@@ -119,13 +161,12 @@ class _forgotPasswordState extends State {
                       padding: const EdgeInsets.all(16.0),
                       child: Text('Change Password',
                           style: const TextStyle(
-                            color: Colors.white,fontSize: 18
-                          )),
+                              color: Colors.white, fontSize: 18)),
                     ),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.purple,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(30),
                       ),
                     )),
               ),

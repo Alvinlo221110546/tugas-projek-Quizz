@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizz/provider/DarkmodeProvider.dart';
+import 'package:quizz/page/provider/DarkmodeProvider.dart';
 
 class SettingsPage extends StatefulWidget {
   @override
