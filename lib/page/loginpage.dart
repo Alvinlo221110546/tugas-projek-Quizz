@@ -1,106 +1,244 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:quizz/page/forgotPwd.dart';
+import 'package:quizz/page/mainpage.dart';
+import 'package:quizz/page/provider/providerUser.dart';
+import 'package:quizz/page/register_page.dart';
 
-void main() {
-  runApp(MaterialApp(
-    home: Scaffold(
+class LoginPage extends StatefulWidget {
+  const LoginPage({Key? key}) : super(key: key);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _isPasswordVisible = false;
+
+  @override
+  Widget build(BuildContext context) {
+  final profileProvider= Provider.of<ProfileProvider>(context);
+  TextEditingController fullNameController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+    return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFFF8F6E3),
-        title: Image.asset(
-          'assets/UPSKILL.png',
-          width: 150, // Atur lebar gambar UPSKILL pada app bar
-        ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage(
-                'assets/Mentor.jpg'), // Gunakan gambar sebagai latar belakang
-            fit: BoxFit.cover, // Sesuaikan gambar agar terisi seluruh layar
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.purple,
+        title: Text(
+          'UP SKILL',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
           ),
         ),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(height: 20), // Spasi antara gambar dan container
-                Container(
-                  padding: EdgeInsets.all(
-                      20), // Padding untuk konten dalam container
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEEEDEB), // Memberi warna latar belakang
-                    borderRadius: BorderRadius.circular(
-                        10), // Mengatur radius border container
-                  ),
-                  width: 500, // Lebar container
-                  height: 500, // Tinggi container
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Ola!',
-                        style: TextStyle(
-                          fontSize: 50, // Ukuran font teks
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Text(
-                        'Tidak ada batasan untuk apa yang dapat kamu capai ketika kamu berani belajar dengan tekun dan semangat yang tak tergoyahkan. Setiap kata, setiap halaman, dan setiap tantangan adalah langkah maju menuju versi terbaik dari dirimu. ',
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 20), // Spasi antara teks dan field input
-                      TextField(
-                        decoration: InputDecoration(
-                          labelText: 'Username', // Label untuk input username
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                          ), // Mengatur border input
-                        ),
-                      ),
-                      SizedBox(
-                          height:
-                              20), // Spasi antara input username dan password
-                      TextField(
-                        obscureText: true, // Untuk menyembunyikan teks password
-                        decoration: InputDecoration(
-                          labelText: 'Password', // Label untuk input password
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(50.0),
-                          ), // Mengatur border input
-                        ),
-                      ),
-                      SizedBox(
-                          height:
-                              20), // Spasi antara input password dan tombol login
-                      ElevatedButton(
-                        onPressed: () {
-                          // Tindakan ketika tombol login ditekan
-                          // Misalnya, verifikasi username dan password
-                        },
-                        child: Text('Login'), // Teks pada tombol login
-                      ),
-                      SizedBox(height: 50),
-                      Divider(
-                        color: Colors.grey, // Warna garis horizontal
-                        thickness: 1, // Ketebalan garis horizontal
-                      ),
-
-                      // Spasi antara tombol login dan tombol sign up
-                      ElevatedButton(
-                        onPressed: () {
-                          // Tindakan ketika tombol sign up ditekan
-                          // Misalnya, navigasi ke halaman pendaftaran
-                        },
-                        child: Text('Sign Up'), // Teks pada tombol sign up
-                      ),
-                    ],
-                  ),
+      ),
+      body: Center(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 20),
+              Container(
+                padding: EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
                 ),
-              ],
-            ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Ola!',
+                      style: TextStyle(
+                        fontSize: 50,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Tidak ada batasan untuk apa yang dapat kamu capai ketika kamu berani belajar dengan tekun dan semangat yang tak tergoyahkan. Setiap kata, setiap halaman, dan setiap tantangan adalah langkah maju menuju versi terbaik dari dirimu.',
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: fullNameController,
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        prefixIcon: Icon(Icons.person),
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Please enter a username';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      controller: passwordController,
+                      obscureText: !_isPasswordVisible,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(50.0),
+                        ),
+                        prefixIcon: Icon(Icons.lock),
+                        suffixIcon: IconButton(
+                          icon: Icon(_isPasswordVisible ? Icons.visibility_off : Icons.visibility),
+                          onPressed: () {
+                            setState(() {
+                              _isPasswordVisible = !_isPasswordVisible;
+                            });
+                          },
+                        ),
+                      ),
+                      validator: (value) {
+                        if (value?.isEmpty ?? true) {
+                          return 'Please enter a password';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 10),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordPage()));
+                      },
+                      child: Text(
+                        'Forgot Password?',
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        
+                        
+                          if (fullNameController.text.isEmpty || passwordController.text.isEmpty){
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text("Login Failed"),
+                                  content: Text(
+                                      "Username or password cannot be empty. Please try again."),
+                                  actions: <Widget>[
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text("OK"),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          }else{
+                            bool isValidUser = profileProvider.account.any(
+                                (account) =>
+                                    account.fullName == fullNameController.text &&
+                                    account.password == passwordController.text);
+                            if (isValidUser) {
+                              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                  builder: (context) => MainMenu()));
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text("Login Failed"),
+                                    content: Text(
+                                        "Incorrect username or password. Please try again."),
+                                    actions: <Widget>[
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text("OK"),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
+                            }
+                          }
+                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MainMenu()));
+
+                       
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
+                        child: Text(
+                          'LOGIN',
+                          style: TextStyle(fontSize: 18, color: Colors.white),
+                        ),
+                      ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.purple,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Divider(
+                      color: Colors.grey,
+                      thickness: 1,
+                    ),
+                    SizedBox(height: 10),
+                    Text('Or Login With'),
+                    SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _buildSocialButton(FontAwesomeIcons.google),
+                        _buildSocialButton(FontAwesomeIcons.facebook),
+                        _buildSocialButton(FontAwesomeIcons.twitter),
+                        _buildSocialButton(FontAwesomeIcons.instagram),
+                        _buildSocialButton(FontAwesomeIcons.telegram),
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      'Don\'t have an account?',
+                     
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => RegisterPage()));
+                      },
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
-    ),
-  ));
+    );
+  }
+
+  Widget _buildSocialButton(IconData iconData) {
+    return Icon(
+      iconData,
+      size: 30,
+      color: Colors.black,
+    );
+  }
 }

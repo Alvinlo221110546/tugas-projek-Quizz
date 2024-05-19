@@ -8,7 +8,7 @@ import 'package:quizz/page/profile_page.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 import 'package:quizz/page/score.dart';
 import 'package:quizz/page/setting.dart';
-import 'package:quizz/page/about_us.dart';
+
 
 class DashboardModal extends StatelessWidget {
   @override
@@ -130,8 +130,8 @@ class DashboardModal extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('About Us'),
             onTap: () {
-              Navigator.push(
-                  context, MaterialPageRoute(builder: (context) => AboutUs()));
+              // Navigator.push(
+              //     context, MaterialPageRoute(builder: (context) => AboutUs()));
             },
           ),
           // Tombol logout

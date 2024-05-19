@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizz/page/Mainmenu.dart';
 import 'package:quizz/page/changepassword.dart';
+import 'package:quizz/page/mainpage.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 
 class MyApp extends StatelessWidget {
