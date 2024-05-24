@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/page/Dashboard.dart';
 import 'package:quizz/page/courseandquiz.dart';
 import 'package:quizz/page/coursehall_2/accounting.dart';
-import 'package:quizz/page/Dasboard.dart';
 import 'package:quizz/page/LoginPage.dart';
 import 'package:quizz/page/coursehall_2/datacourse.dart';
 import 'package:quizz/page/coursehall_2/englishcourse.dart';

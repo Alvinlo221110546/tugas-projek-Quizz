@@ -310,8 +310,6 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
     super.dispose();
   }
 
-  
-
   @override
   Widget build(BuildContext context) {
     _filteredItems.where((item) => item.containsKey('course')).toList();
@@ -517,295 +515,315 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
     );
   }
 
-
-
-Widget buildCourseCard( Map<String, String> item) {
-  return GestureDetector(
-    child: Container(
-      margin: EdgeInsets.only(right: 20),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.asset(
-                  item['image']!,
-                  width: 250,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  item['title']!,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+  Widget buildCourseCard(Map<String, String> item) {
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.asset(
+                    item['image']!,
+                    width: 250,
+                    height: 100,
+                    fit: BoxFit.cover,
                   ),
                 ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  item['subtitle']!,
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Dibuat oleh\n${item['author']}',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    for (int i = 0; i < 5; i++)
-                      Icon(
-                        i < (double.tryParse(item['rating'] ?? '0') ?? 0).round()
-                            ? Icons.star
-                            : Icons.star_border,
-                        color: i <
-                                (double.tryParse(item['rating'] ?? '0') ?? 0)
-                                    .round()
-                            ? Colors.yellow
-                            : Colors.black,
-                      ),
-                    SizedBox(width: 5),
-                    Text(item['rating'] ?? '0'),
-                    SizedBox(width: 5),
-                    Text(item['reviews'] ?? '0'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(left: 13),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.circular(5),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    item['title']!,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) {
-                            switch (item['course']) {
-                              case 'DataCourse':
-                                return DataCourse();
-                              case 'AccountingCourse':
-                                return AccountingCourse();
-                              case 'EnglishCourse':
-                                return EnglishCourse();
-                              case 'InvestCourse':
-                                return InvestCourse();
-                              case 'MarketCourse':
-                                return MarketCourse();
-                              case 'OfficeCourse':
-                                return OfficeCourse();
-                              default:
-                                return Container();
-                            }
-                          },
+                ),
+                SizedBox(height: 5),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    item['subtitle']!,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Dibuat oleh\n${item['author']}',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < 5; i++)
+                        Icon(
+                          i <
+                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
+                                      .round()
+                              ? Icons.star
+                              : Icons.star_border,
+                          color: i <
+                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
+                                      .round()
+                              ? Colors.yellow
+                              : Colors.black,
                         ),
-                      );
-                    },
-                    child: Text(
-                      'Learn Here',
-                      style: TextStyle(
-                        color: Colors.white,
+                      SizedBox(width: 5),
+                      Text(item['rating'] ?? '0'),
+                      SizedBox(width: 5),
+                      Text(item['reviews'] ?? '0'),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 13),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) {
+                              switch (item['course']) {
+                                case 'DataCourse':
+                                  return DataCourse();
+                                case 'AccountingCourse':
+                                  return AccountingCourse();
+                                case 'EnglishCourse':
+                                  return EnglishCourse();
+                                case 'InvestCourse':
+                                  return InvestCourse();
+                                case 'MarketCourse':
+                                  return MarketCourse();
+                                case 'OfficeCourse':
+                                  return OfficeCourse();
+                                default:
+                                  return Container();
+                              }
+                            },
+                          ),
+                        );
+                      },
+                      child: Text(
+                        'Learn Here',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-            ],
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Consumer<FavoriteModel>(
-              builder: (context, favoriteModel, child) {
-                final isFavorite = favoriteModel.isFavorite(item['title']!);
-                return IconButton(
-                  
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite ? const Color.fromARGB(255, 255, 17, 0) : Colors.white,
-                  ),
-                  onPressed: () {
-                    favoriteModel.toggleFavorite(item);
-                  },
-                );
-              },
+                SizedBox(height: 20),
+              ],
             ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildQuizCard(Map<String, String> item) {
-  return GestureDetector(
-    child: Container(
-      margin: EdgeInsets.only(right: 20),
-      decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey),
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      child: Stack(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: Image.asset(
-                  item['image']!,
-                  width: 250,
-                  height: 100,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              SizedBox(height: 20),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  item['title']!,
-                  style: TextStyle(
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-              SizedBox(height: 5),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  item['subtitle']!,
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Text(
-                  'Dibuat oleh\n${item['author']}',
-                  style: TextStyle(fontSize: 15),
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(left: 10),
-                child: Row(
-                  children: [
-                    for (int i = 0; i < 5; i++)
-                      Icon(
-                        i < (double.tryParse(item['rating'] ?? '0') ?? 0).round()
-                            ? Icons.star
-                            : Icons.star_border,
-                        color: i <
-                                (double.tryParse(item['rating'] ?? '0') ?? 0)
-                                    .round()
-                            ? Colors.yellow
-                            : Colors.black,
-                      ),
-                    SizedBox(width: 5),
-                    Text(item['rating'] ?? '0'),
-                    SizedBox(width: 5),
-                    Text(item['reviews'] ?? '0'),
-                  ],
-                ),
-              ),
-              SizedBox(height: 10),
-              Padding(
-                padding: EdgeInsets.only(left: 13),
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: Colors.purple,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: TextButton(
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Consumer<FavoriteModel>(
+                builder: (context, favoriteModel, child) {
+                  final isFavorite = favoriteModel.isFavorite(item['title']!);
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite
+                          ? const Color.fromARGB(255, 255, 17, 0)
+                          : Colors.white,
+                    ),
                     onPressed: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) {
-                      //       switch (item['quiz']) {
-                      //         case 'DataCourse':
-                      //           return DataCourse();
-                      //         case 'AccountingCourse':
-                      //           return AccountingCourse();
-                      //         case 'EnglishCourse':
-                      //           return EnglishCourse();
-                      //         case 'InvestCourse':
-                      //           return InvestCourse();
-                      //         case 'MarketCourse':
-                      //           return MarketCourse();
-                      //         case 'OfficeCourse':
-                      //           return OfficeCourse();
-                      //         default:
-                      //           return Container();
-                      //       }
-                      //     },
-                      //   ),
-                      // );
+                      if (!isFavorite) {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Added to Favorites!");
+                      } else {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Removed from Favorites!");
+                      }
                     },
-                    child: Text(
-                      'Start Quiz',
-                      style: TextStyle(
-                        color: Colors.white,
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildQuizCard(Map<String, String> item) {
+    return GestureDetector(
+      child: Container(
+        margin: EdgeInsets.only(right: 20),
+        decoration: BoxDecoration(
+          border: Border.all(color: Colors.grey),
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: Image.asset(
+                    item['image']!,
+                    width: 250,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    item['title']!,
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 5),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    item['subtitle']!,
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Text(
+                    'Dibuat oleh\n${item['author']}',
+                    style: TextStyle(fontSize: 15),
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 10),
+                  child: Row(
+                    children: [
+                      for (int i = 0; i < 5; i++)
+                        Icon(
+                          i <
+                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
+                                      .round()
+                              ? Icons.star
+                              : Icons.star_border,
+                          color: i <
+                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
+                                      .round()
+                              ? Colors.yellow
+                              : Colors.black,
+                        ),
+                      SizedBox(width: 5),
+                      Text(item['rating'] ?? '0'),
+                      SizedBox(width: 5),
+                      Text(item['reviews'] ?? '0'),
+                    ],
+                  ),
+                ),
+                SizedBox(height: 10),
+                Padding(
+                  padding: EdgeInsets.only(left: 13),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Colors.purple,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: TextButton(
+                      onPressed: () {
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //     builder: (context) {
+                        //       switch (item['quiz']) {
+                        //         case 'DataCourse':
+                        //           return DataCourse();
+                        //         case 'AccountingCourse':
+                        //           return AccountingCourse();
+                        //         case 'EnglishCourse':
+                        //           return EnglishCourse();
+                        //         case 'InvestCourse':
+                        //           return InvestCourse();
+                        //         case 'MarketCourse':
+                        //           return MarketCourse();
+                        //         case 'OfficeCourse':
+                        //           return OfficeCourse();
+                        //         default:
+                        //           return Container();
+                        //       }
+                        //     },
+                        //   ),
+                        // );
+                      },
+                      child: Text(
+                        'Start Quiz',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(height: 20),
-            ],
-          ),
-          Positioned(
-            top: 10,
-            right: 10,
-            child: Consumer<FavoriteModel>(
-              builder: (context, favoriteModel, child) {
-                final isFavorite = favoriteModel.isFavorite(item['title']!);
-                return IconButton(
-                  icon: Icon(
-                    isFavorite ? Icons.favorite : Icons.favorite_border,
-                    color: isFavorite ? const Color.fromARGB(255, 255, 17, 0) : Colors.white,
-                  ),
-                  onPressed: () {
-                    favoriteModel.toggleFavorite(item);
-                  },
-                );
-              },
+                SizedBox(height: 20),
+              ],
             ),
-          ),
-        ],
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Consumer<FavoriteModel>(
+                builder: (context, favoriteModel, child) {
+                  final isFavorite = favoriteModel.isFavorite(item['title']!);
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite
+                          ? const Color.fromARGB(255, 255, 17, 0)
+                          : Colors.white,
+                    ),
+                    onPressed: () {
+                      if (!isFavorite) {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Added to Favorites!");
+                      } else {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Removed from Favorites!");
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
-    ),
-    
-  );
-}void _showSnackBar(BuildContext context, String message) {
-    final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    );
   }
 }
-  
+
+void _showSnackBar(BuildContext context, String message) {
+  final snackBar = SnackBar(
+    content: Text(message),
+    duration: Duration(seconds: 2), 
+  );
+  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+}

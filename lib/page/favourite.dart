@@ -220,7 +220,7 @@ class _FavouriteState extends State<Favourite> {
   Widget buildFavoriteCardQuiz(Map<String, String> item) {
     return Container(
       margin: EdgeInsets.all(10),
-      // padding: EdgeInsets.all(10),
+      
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(10.0),
@@ -328,7 +328,7 @@ class _FavouriteState extends State<Favourite> {
             borderRadius: BorderRadius.circular(10.0),
             child: Image.asset(
               item['image']!,
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
             ),
           ),
           SizedBox(height: 10),
