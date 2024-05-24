@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz/page/LoginPage.dart';
 import 'package:quizz/page/contactus.dart';
+import 'package:quizz/page/courseandquiz.dart';
 import 'package:quizz/page/help.dart';
 import 'package:quizz/page/history.dart';
 import 'package:quizz/page/profile_page.dart';
@@ -91,7 +92,10 @@ class DashboardModal extends StatelessWidget {
           ListTile(
             leading: Icon(Icons.list),
             title: Text('Courses & Quizzes'),
-            onTap: () {},
+            onTap: () {
+               Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+            },
           ),
           ListTile(
             leading: Icon(Icons.history),
@@ -130,8 +134,7 @@ class DashboardModal extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('About Us'),
             onTap: () {
-              // Navigator.push(
-              //     context, MaterialPageRoute(builder: (context) => AboutUs()));
+            
             },
           ),
           // Tombol logout

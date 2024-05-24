@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/Dashboard.dart';
+import 'package:quizz/page/courseandquiz.dart';
 import 'package:quizz/page/coursehall_2/accounting.dart';
+import 'package:quizz/page/Dasboard.dart';
 import 'package:quizz/page/LoginPage.dart';
 import 'package:quizz/page/coursehall_2/datacourse.dart';
 import 'package:quizz/page/coursehall_2/englishcourse.dart';
@@ -8,6 +9,7 @@ import 'package:quizz/page/coursehall_2/investcourse.dart';
 import 'package:quizz/page/coursehall_2/marketingcourse.dart';
 import 'package:quizz/page/coursehall_2/officecourse.dart';
 import 'package:quizz/page/enterCode.dart';
+import 'package:quizz/page/favourite.dart';
 
 class HighlightedBorderIcon extends StatelessWidget {
   final IconData icon;
@@ -181,14 +183,20 @@ class _mainMenuState extends State {
           BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.search),
-              onPressed: () {},
+              onPressed: () {
+                       Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+              },
             ),
             label: 'Seacrh',
           ),
           BottomNavigationBarItem(
             icon: IconButton(
               icon: Icon(Icons.favorite),
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => Favourite()));
+              },
             ),
             label: 'Favorite',
           ),
@@ -279,7 +287,10 @@ class _mainMenuState extends State {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseAndQuiz()));
+
+                        },
                         child: Text("SEE MORE >>",
                             style: TextStyle(color: Colors.white)))
                   ],
@@ -733,7 +744,7 @@ class _mainMenuState extends State {
                           Padding(
                               padding: EdgeInsets.only(left: 10),
                               child: Text(
-                                "Complete this course and master it",
+                                "Complete this course ",
                                 style: TextStyle(fontSize: 15),
                               )),
                           SizedBox(height: 10),
@@ -821,7 +832,10 @@ class _mainMenuState extends State {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseAndQuiz()));
+
+                        },
                         child: Text("SEE MORE >>",
                             style: TextStyle(color: Colors.white)))
                   ],
@@ -1275,7 +1289,10 @@ class _mainMenuState extends State {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseAndQuiz()));
+
+                        },
                         child: Text("SEE MORE >>",
                             style: TextStyle(color: Colors.white)))
                   ],
@@ -1733,7 +1750,10 @@ class _mainMenuState extends State {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseAndQuiz()));
+
+                        },
                         child: Text("SEE MORE >>",
                             style: TextStyle(color: Colors.white)))
                   ],
@@ -2189,7 +2209,10 @@ class _mainMenuState extends State {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.purple,
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context)=>CourseAndQuiz()));
+
+                        },
                         child: Text("SEE MORE >>",
                             style: TextStyle(color: Colors.white)))
                   ],
@@ -2688,7 +2711,8 @@ class _mainMenuState extends State {
                     ),
                   ],
                 ),
-              )
+              ),
+              SizedBox(height: 50,)
             ],
           ),
         ),
