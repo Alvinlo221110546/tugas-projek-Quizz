@@ -154,7 +154,7 @@ class _FavouriteState extends State<Favourite> {
                       );
                     },
                     child: Text(
-                      'Explore Courses',
+                      'Explore',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
