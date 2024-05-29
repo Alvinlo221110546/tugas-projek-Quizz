@@ -177,6 +177,7 @@ class _FavouriteState extends State<Favourite> {
           }
         },
       ),
+      drawer: DashboardModal()
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
