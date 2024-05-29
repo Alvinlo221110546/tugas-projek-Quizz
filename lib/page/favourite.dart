@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quizz/page/Dashboard.dart';
 import 'package:quizz/page/LoginPage.dart';
 import 'package:quizz/page/courseandquiz.dart';
 import 'package:quizz/page/coursehall_2/accounting.dart';
@@ -177,7 +178,7 @@ class _FavouriteState extends State<Favourite> {
           }
         },
       ),
-      drawer: DashboardModal()
+      drawer: DashboardModal(),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
