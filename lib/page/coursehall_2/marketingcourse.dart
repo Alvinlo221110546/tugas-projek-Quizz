@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MarketCourse extends StatelessWidget {
@@ -8,7 +9,7 @@ class MarketCourse extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,
-        title: Text('Marketing Course', style: TextStyle(color: Colors.white)),
+        title: Text('Marketing Course', style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
       ),
       body: SingleChildScrollView(
         child: Padding(

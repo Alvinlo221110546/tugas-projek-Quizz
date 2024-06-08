@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
+
 import 'package:quizz/page/forgotPwd.dart';
-import 'package:quizz/page/mainpage.dart';
+import 'package:quizz/page/loading.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 import 'package:quizz/page/register_page.dart';
 
@@ -18,9 +19,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-  final profileProvider= Provider.of<ProfileProvider>(context);
-  TextEditingController fullNameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    TextEditingController fullNameController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
 
     return Scaffold(
       appBar: AppBar(
@@ -121,9 +122,12 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: () {
-                        
-                        
-                          if (fullNameController.text.isEmpty || passwordController.text.isEmpty){
+                        if (profileProvider.account.isEmpty) {
+                         
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(
+                              builder: (context) => LoadingPage()));
+                        } else {
+                          if (fullNameController.text.isEmpty || passwordController.text.isEmpty) {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -142,14 +146,14 @@ class _LoginPageState extends State<LoginPage> {
                                 );
                               },
                             );
-                          }else{
+                          } else {
                             bool isValidUser = profileProvider.account.any(
                                 (account) =>
                                     account.fullName == fullNameController.text &&
                                     account.password == passwordController.text);
                             if (isValidUser) {
                               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                  builder: (context) => MainMenu()));
+                                  builder: (context) => LoadingPage()));
                             } else {
                               showDialog(
                                 context: context,
@@ -171,9 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                               );
                             }
                           }
-                        Navigator.push(context, MaterialPageRoute(builder: (context)=>MainMenu()));
-
-                       
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 10),
@@ -210,7 +212,6 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 20),
                     Text(
                       'Don\'t have an account?',
-                     
                     ),
                     TextButton(
                       onPressed: () {

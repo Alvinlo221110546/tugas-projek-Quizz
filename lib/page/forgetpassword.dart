@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:quizz/page/LoginPage.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 
-
 class forgotPasswordPage extends StatefulWidget {
   const forgotPasswordPage({super.key});
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 
@@ -10,6 +11,7 @@ class AccountingCourse extends StatelessWidget {
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,      
         title: Text('Accounting Course',style: TextStyle(color: Colors.white)),
+        actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))],
       ),
       body: SingleChildScrollView(
         child: Padding(

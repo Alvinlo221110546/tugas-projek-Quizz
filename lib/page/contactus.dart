@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class ContactUsPage extends StatelessWidget {
   @override
@@ -122,6 +123,47 @@ class _ContactFormState extends State<ContactForm> {
   String _name = '';
   String _email = '';
   String _message = '';
+  
+
+
+  void _showSuccess() {
+    setState(() {
+    });
+    Future.delayed(Duration(seconds: 1), () {
+      setState(() {
+      });
+       _showSuccessDialog();
+    });
+   
+  }
+
+ void _showSuccessDialog() {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      Future.delayed(Duration(seconds: 4), () {
+        Navigator.of(context).pop();
+      }); 
+
+      return Dialog(
+        child: Container(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CachedNetworkImage(
+                imageUrl:
+                    'https://www.bing.com/th/id/OGC.35f323bc5b41dc4269001529e3ff1278?pid=1.7&rurl=https%3a%2f%2fcdn.dribbble.com%2fusers%2f39201%2fscreenshots%2f3694057%2fmedia%2f2a1b062114a8244102f67deeb89395fa.gif&ehk=UKQWUom9EAuMfI5A9sAGuRTzi%2fdQT1KVKBkUf%2fajUv8%3d',
+                placeholder: (context, url) => CircularProgressIndicator(),
+                errorWidget: (context, url, error) => Icon(Icons.error),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -200,6 +242,7 @@ class _ContactFormState extends State<ContactForm> {
                   print('Email: $_email');
                   print('Message: $_message');
                 }
+                _showSuccess();
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.purple,

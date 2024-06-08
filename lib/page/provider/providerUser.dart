@@ -1,9 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class Account {
   int id;
   String fullName;
-  String profilePictureUrl;
+  Uint8List? profilePicture;
   String email;
   String password;
   String phone;
@@ -12,7 +14,7 @@ class Account {
   Account({
     this.id = 0,
     this.fullName = '',
-    this.profilePictureUrl = '',
+    this.profilePicture,
     this.email = '',
     this.password = '',
     this.phone = '',
@@ -24,6 +26,8 @@ class ProfileProvider extends ChangeNotifier {
   List<Account> account = [
   
   ];
+
+  get profilePicture => null;
 
   void addAccount(Account a) {
     a.id = account.length;
@@ -61,12 +65,10 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changeProfilePicture(int id, String profilePictureUrl) {
-    for (var a in account) {
-      if (a.id == id) {
-        a.profilePictureUrl = profilePictureUrl;
-        break;
-      }
+ 
+  void changeProfilePicture(int index, Uint8List imageBytes) {
+    if (account.isNotEmpty) {
+      account[index].profilePicture = imageBytes;
     }
     notifyListeners();
   }
@@ -95,4 +97,6 @@ class ProfileProvider extends ChangeNotifier {
     }
     notifyListeners();
   }
+
+  
 }

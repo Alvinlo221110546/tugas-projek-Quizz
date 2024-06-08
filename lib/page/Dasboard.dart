@@ -9,15 +9,19 @@ import 'package:quizz/page/profile_page.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 import 'package:quizz/page/score.dart';
 import 'package:quizz/page/setting.dart';
-
+import 'package:quizz/page/about_us.dart';
 
 class DashboardModal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-  final profileProvider = Provider.of<ProfileProvider>(context);
-    String username = profileProvider.account.isNotEmpty ? profileProvider.account[0].fullName:'';
-  String email = profileProvider.account.isNotEmpty ? profileProvider.account[0].email:'';
-  String profilePicture= profileProvider.account.isNotEmpty ? profileProvider.account[0].profilePictureUrl:'';
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    String username = profileProvider.account.isNotEmpty
+        ? profileProvider.account[0].fullName
+        : '';
+    String email = profileProvider.account.isNotEmpty
+        ? profileProvider.account[0].email
+        : '';
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -43,7 +47,13 @@ class DashboardModal extends StatelessWidget {
                     children: [
                       CircleAvatar(
                         radius: 30,
-                        backgroundImage: AssetImage(profilePicture)
+                        backgroundColor: Colors.purple[200],
+                        backgroundImage: profileProvider.account.isNotEmpty
+                            ? profileProvider.account[0].profilePicture != null
+                                ? MemoryImage(
+                                    profileProvider.account[0].profilePicture!)
+                                : null
+                            : null,
                       ),
                       SizedBox(width: 20),
                       Expanded(
@@ -51,7 +61,7 @@ class DashboardModal extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              username ,
+                              username,
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18,
@@ -93,7 +103,7 @@ class DashboardModal extends StatelessWidget {
             leading: Icon(Icons.list),
             title: Text('Courses & Quizzes'),
             onTap: () {
-               Navigator.push(context,
+              Navigator.push(context,
                   MaterialPageRoute(builder: (context) => CourseAndQuiz()));
             },
           ),
@@ -134,7 +144,8 @@ class DashboardModal extends StatelessWidget {
             leading: Icon(Icons.info),
             title: Text('About Us'),
             onTap: () {
-            
+              Navigator.push(
+                  context, MaterialPageRoute(builder: (context) => AboutUs()));
             },
           ),
           // Tombol logout

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizz/page/Dashboard.dart';
+import 'package:quizz/page/Dasboard.dart';
 import 'package:quizz/page/LoginPage.dart';
+import 'package:quizz/page/Mainmenu.dart';
 import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/coursehall_2/datacourse.dart';
 import 'package:quizz/page/coursehall_2/englishcourse.dart';
@@ -10,8 +11,8 @@ import 'package:quizz/page/coursehall_2/marketingcourse.dart';
 import 'package:quizz/page/coursehall_2/officecourse.dart';
 import 'package:quizz/page/enterCode.dart';
 import 'package:quizz/page/favourite.dart';
-import 'package:quizz/page/mainpage.dart';
 import 'package:quizz/page/provider/favouriteprovider.dart';
+import 'package:quizz/page/quiz_page.dart';
 
 class CourseAndQuiz extends StatefulWidget {
   @override
@@ -394,42 +395,55 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
       ),
       drawer: DashboardModal(),
       bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MainMenu()));
-              },
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CourseAndQuiz()));
-              },
-            ),
-            label: 'Seacrh',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.favorite),
-              onPressed: () {
-                Navigator.pushReplacement(context,
-                    MaterialPageRoute(builder: (context) => Favourite()));
-              },
-            ),
-            label: 'Favorite',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.purple,
-        onTap: _onItemTapped,
+  items: <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Tooltip(
+        message: 'Home',
+        child: IconButton(
+          icon: Icon(Icons.home),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MainMenu()));
+          },
+        ),
       ),
+      label: '', 
+    ),
+    BottomNavigationBarItem(
+      icon: Tooltip(
+        message: 'Search',
+        child: IconButton(
+          icon: Icon(Icons.search),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+          },
+        ),
+      ),
+      label: '', 
+    ),
+    BottomNavigationBarItem(
+      icon: Tooltip(
+        message: 'Favorite',
+        child: IconButton(
+          icon: Icon(Icons.favorite),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => Favourite()));
+          },
+        ),
+      ),
+      label: '', 
+    ),
+  ],
+  currentIndex: _selectedIndex,
+  selectedItemColor: Colors.purple,
+  onTap: _onItemTapped,
+),
+
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Padding(
@@ -517,19 +531,19 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
 
   Widget buildCourseCard(Map<String, String> item) {
     return GestureDetector(
-      child: Container(
+      child: Card(
         margin: EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: const Color.fromARGB(255, 145, 143, 143))),
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(10.0)),
                   child: Image.asset(
                     item['image']!,
                     width: 250,
@@ -537,102 +551,95 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    item['title']!,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    item['subtitle']!,
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Dibuat oleh\n${item['author']}',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Row(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for (int i = 0; i < 5; i++)
-                        Icon(
-                          i <
-                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
-                                      .round()
-                              ? Icons.star
-                              : Icons.star_border,
-                          color: i <
-                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
-                                      .round()
-                              ? Colors.yellow
-                              : Colors.black,
+                      Text(
+                        item['title']!,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
                         ),
-                      SizedBox(width: 5),
-                      Text(item['rating'] ?? '0'),
-                      SizedBox(width: 5),
-                      Text(item['reviews'] ?? '0'),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        item['subtitle']!,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Dibuat oleh\n${item['author']}',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          for (int i = 0; i < 5; i++)
+                            Icon(
+                              i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Colors.yellow
+                                  : Colors.black,
+                            ),
+                          SizedBox(width: 5),
+                          Text(item['rating'] ?? '0'),
+                          SizedBox(width: 5),
+                          Text(item['reviews'] ?? '0'),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  switch (item['course']) {
+                                    case 'DataCourse':
+                                      return DataCourse();
+                                    case 'AccountingCourse':
+                                      return AccountingCourse();
+                                    case 'EnglishCourse':
+                                      return EnglishCourse();
+                                    case 'InvestCourse':
+                                      return InvestCourse();
+                                    case 'MarketCourse':
+                                      return MarketCourse();
+                                    case 'OfficeCourse':
+                                      return OfficeCourse();
+                                    default:
+                                      return Container();
+                                  }
+                                },
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Learn Here',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.only(left: 13),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) {
-                              switch (item['course']) {
-                                case 'DataCourse':
-                                  return DataCourse();
-                                case 'AccountingCourse':
-                                  return AccountingCourse();
-                                case 'EnglishCourse':
-                                  return EnglishCourse();
-                                case 'InvestCourse':
-                                  return InvestCourse();
-                                case 'MarketCourse':
-                                  return MarketCourse();
-                                case 'OfficeCourse':
-                                  return OfficeCourse();
-                                default:
-                                  return Container();
-                              }
-                            },
-                          ),
-                        );
-                      },
-                      child: Text(
-                        'Learn Here',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
               ],
             ),
             Positioned(
@@ -669,19 +676,19 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
 
   Widget buildQuizCard(Map<String, String> item) {
     return GestureDetector(
-      child: Container(
+      child: Card(
         margin: EdgeInsets.only(right: 20),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey),
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: const Color.fromARGB(255, 145, 143, 143))),
         child: Stack(
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(10.0)),
                   child: Image.asset(
                     item['image']!,
                     width: 250,
@@ -689,102 +696,77 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
                     fit: BoxFit.cover,
                   ),
                 ),
-                SizedBox(height: 20),
                 Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    item['title']!,
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 5),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    item['subtitle']!,
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Text(
-                    'Dibuat oleh\n${item['author']}',
-                    style: TextStyle(fontSize: 15),
-                  ),
-                ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.only(left: 10),
-                  child: Row(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      for (int i = 0; i < 5; i++)
-                        Icon(
-                          i <
-                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
-                                      .round()
-                              ? Icons.star
-                              : Icons.star_border,
-                          color: i <
-                                  (double.tryParse(item['rating'] ?? '0') ?? 0)
-                                      .round()
-                              ? Colors.yellow
-                              : Colors.black,
+                      Text(
+                        item['title']!,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
                         ),
-                      SizedBox(width: 5),
-                      Text(item['rating'] ?? '0'),
-                      SizedBox(width: 5),
-                      Text(item['reviews'] ?? '0'),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        item['subtitle']!,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Dibuat oleh\n${item['author']}',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          for (int i = 0; i < 5; i++)
+                            Icon(
+                              i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Colors.yellow
+                                  : Colors.black,
+                            ),
+                          SizedBox(width: 5),
+                          Text(item['rating'] ?? '0'),
+                          SizedBox(width: 5),
+                          Text(item['reviews'] ?? '0'),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                              Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    QuizPage(item['quiz']!, item['title']!)));
+                          },
+                          child: Text(
+                            'Start Quiz',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                SizedBox(height: 10),
-                Padding(
-                  padding: EdgeInsets.only(left: 13),
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: TextButton(
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(
-                        //     builder: (context) {
-                        //       switch (item['quiz']) {
-                        //         case 'DataCourse':
-                        //           return DataCourse();
-                        //         case 'AccountingCourse':
-                        //           return AccountingCourse();
-                        //         case 'EnglishCourse':
-                        //           return EnglishCourse();
-                        //         case 'InvestCourse':
-                        //           return InvestCourse();
-                        //         case 'MarketCourse':
-                        //           return MarketCourse();
-                        //         case 'OfficeCourse':
-                        //           return OfficeCourse();
-                        //         default:
-                        //           return Container();
-                        //       }
-                        //     },
-                        //   ),
-                        // );
-                      },
-                      child: Text(
-                        'Start Quiz',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20),
               ],
             ),
             Positioned(
@@ -818,12 +800,12 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
       ),
     );
   }
-}
 
-void _showSnackBar(BuildContext context, String message) {
-  final snackBar = SnackBar(
-    content: Text(message),
-    duration: Duration(seconds: 2), 
-  );
-  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
 }

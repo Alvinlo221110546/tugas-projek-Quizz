@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:quizz/page/Dashboard.dart';
+import 'package:quizz/page/Dasboard.dart';
 import 'package:quizz/page/LoginPage.dart';
+import 'package:quizz/page/Mainmenu.dart';
 import 'package:quizz/page/courseandquiz.dart';
 import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/coursehall_2/datacourse.dart';
@@ -10,7 +11,6 @@ import 'package:quizz/page/coursehall_2/investcourse.dart';
 import 'package:quizz/page/coursehall_2/marketingcourse.dart';
 import 'package:quizz/page/coursehall_2/officecourse.dart';
 import 'package:quizz/page/enterCode.dart';
-import 'package:quizz/page/mainpage.dart';
 import 'package:quizz/page/provider/favouriteprovider.dart';
 
 class Favourite extends StatefulWidget {
@@ -155,7 +155,7 @@ class _FavouriteState extends State<Favourite> {
                       );
                     },
                     child: Text(
-                      'Explore',
+                      'Explore ',
                       style: TextStyle(fontSize: 18, color: Colors.white),
                     ),
                   ),
@@ -179,50 +179,63 @@ class _FavouriteState extends State<Favourite> {
         },
       ),
       drawer: DashboardModal(),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.home),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MainMenu()));
-              },
-            ),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CourseAndQuiz()));
-              },
-            ),
-            label: 'Search',
-          ),
-          BottomNavigationBarItem(
-            icon: IconButton(
-              icon: Icon(Icons.favorite),
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => Favourite()));
-              },
-            ),
-            label: 'Favorite',
-          ),
-        ],
-        currentIndex: _selectedIndex,
-        selectedItemColor: Colors.purple,
-        onTap: _onItemTapped,
+         bottomNavigationBar: BottomNavigationBar(
+  items: <BottomNavigationBarItem>[
+    BottomNavigationBarItem(
+      icon: Tooltip(
+        message: 'Home',
+        child: IconButton(
+          icon: Icon(Icons.home),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => MainMenu()));
+          },
+        ),
       ),
+      label: '', 
+    ),
+    BottomNavigationBarItem(
+      icon: Tooltip(
+        message: 'Search',
+        child: IconButton(
+          icon: Icon(Icons.search),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+          },
+        ),
+      ),
+      label: '', 
+    ),
+    BottomNavigationBarItem(
+      icon: Tooltip(
+        message: 'Favorite',
+        child: IconButton(
+          icon: Icon(Icons.favorite),
+          iconSize: 30,
+          onPressed: () {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => Favourite()));
+          },
+        ),
+      ),
+      label: '', 
+    ),
+  ],
+  currentIndex: _selectedIndex,
+  selectedItemColor: Colors.purple,
+  onTap: _onItemTapped,
+),
+
     );
   }
 
   Widget buildFavoriteCardQuiz(Map<String, String> item) {
     return Container(
       margin: EdgeInsets.all(10),
-      
+      // padding: EdgeInsets.all(10),
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey),
         borderRadius: BorderRadius.circular(10.0),
