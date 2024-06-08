@@ -16,6 +16,7 @@ class _QuizPageState extends State<QuizPage> {
   int _currentQuestionIndex = 0;
   int _score = 0;
   List<Map<String, Object>> _questions = [];
+   Map<int, String> _selectedAnswers = {};
 
   final List<Map<String, Object>> _questions1 = [
     {
@@ -1005,13 +1006,9 @@ class _QuizPageState extends State<QuizPage> {
 
   void _answerQuestion(String answer) {
     setState(() {
-      if (answer == _questions[_currentQuestionIndex]['correctAnswer']) {
+      _selectedAnswers[_currentQuestionIndex] = answer;
+         if (answer == _questions[_currentQuestionIndex]['correctAnswer']) {
         _score++;
-      }
-      if (_currentQuestionIndex < _questions.length - 1) {
-        _currentQuestionIndex++;
-      } else {
-        _showFinalScore(context);
       }
     });
   }
@@ -1020,6 +1017,16 @@ class _QuizPageState extends State<QuizPage> {
     setState(() {
       if (_currentQuestionIndex > 0) {
         _currentQuestionIndex--;
+      }
+    });
+  }
+
+  void _nextQuestion() {
+    setState(() {
+      if (_currentQuestionIndex < _questions.length - 1) {
+        _currentQuestionIndex++;
+      } else {
+        _showFinalScore(context);
       }
     });
   }
@@ -1081,9 +1088,7 @@ class _QuizPageState extends State<QuizPage> {
           shadowColor: themeColor.withOpacity(0.3),
           elevation: 4,
         ),
-        onPressed: () {
-          _answerQuestion('');
-        },
+        onPressed: _nextQuestion,
         child:
             Text('Next', style: TextStyle(fontSize: 16.0, color: Colors.white)),
       );
@@ -1093,9 +1098,9 @@ class _QuizPageState extends State<QuizPage> {
   @override
   Widget build(BuildContext context) {
     final progress = (_currentQuestionIndex + 1) / _questions.length;
-    final questionTheme =
-        _questions[_currentQuestionIndex]['theme'] as Map<String, Object>;
+    final questionTheme = _questions[_currentQuestionIndex]['theme'] as Map<String, Object>;
     final themeColor = questionTheme['color'] as Color;
+    final selectedAnswer = _selectedAnswers[_currentQuestionIndex];
 
     return Scaffold(
       appBar: AppBar(
@@ -1105,7 +1110,15 @@ class _QuizPageState extends State<QuizPage> {
         ),
         backgroundColor: Colors.purple,
         elevation: 0,
-        iconTheme: IconThemeData(color: Colors.white),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
+        iconTheme: IconThemeData(color: Colors.white),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Link()));
+            },
+            icon: Icon(Icons.share),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -1144,29 +1157,26 @@ class _QuizPageState extends State<QuizPage> {
               ),
             ),
             SizedBox(height: 20),
-            ...(_questions[_currentQuestionIndex]['answers'] as List<String>)
-                .map((answer) {
-              return Container(
-                margin: const EdgeInsets.only(bottom: 10.0),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
-                    backgroundColor: themeColor.withOpacity(0.9),
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    shadowColor: themeColor.withOpacity(0.3),
-                    elevation: 4,
+            ...(_questions[_currentQuestionIndex]['answers'] as List<String>).map((answer) {
+              final isSelected = selectedAnswer == answer;
+              return GestureDetector(
+                onTap: () => _answerQuestion(answer),
+                child: Container(
+                  margin: const EdgeInsets.only(bottom: 10.0),
+                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    color: isSelected ? themeColor.withOpacity(0.7) : themeColor.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(10.0),
+                    border: Border.all(color: themeColor),
                   ),
                   child: Text(
                     answer,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: isSelected ? Colors.white : themeColor,
                       fontSize: 16.0,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  onPressed: () => _answerQuestion(answer),
                 ),
               );
             }).toList(),
@@ -1203,18 +1213,14 @@ class _QuizPageState extends State<QuizPage> {
                         margin: const EdgeInsets.all(4.0),
                         padding: const EdgeInsets.symmetric(horizontal: 10.0),
                         decoration: BoxDecoration(
-                          color: index == _currentQuestionIndex
-                              ? themeColor.withOpacity(0.9)
-                              : Colors.grey[200],
+                          color: index == _currentQuestionIndex ? themeColor.withOpacity(0.9) : Colors.grey[200],
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Center(
                           child: Text(
                             '${index + 1}',
                             style: TextStyle(
-                              color: index == _currentQuestionIndex
-                                  ? Colors.white
-                                  : themeColor,
+                              color: index == _currentQuestionIndex ? Colors.white : themeColor,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
