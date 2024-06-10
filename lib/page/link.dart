@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 
 class Link extends StatefulWidget {
   @override
@@ -9,11 +10,10 @@ class Link extends StatefulWidget {
 class _LinkState extends State<Link> {
   final String downloadLink = "https://UPPSKILL.com";
 
-   void _shareLink() {
+  void _shareLink() async {
     try {
       String message = 'Download our app using this link: $downloadLink';
-      print('Sharing link: $message');
-      
+      await Share.share(message);
     } catch (error) {
       print('Error sharing link: $error');
       ScaffoldMessenger.of(context).showSnackBar(
@@ -27,7 +27,7 @@ class _LinkState extends State<Link> {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.purple, 
+        backgroundColor: Colors.purple,
       ),
       body: Center(
         child: SingleChildScrollView(
@@ -54,7 +54,7 @@ class _LinkState extends State<Link> {
                   );
                 },
                 icon: Icon(Icons.copy, color: Colors.white),
-                label: Text('Copy Link',style: TextStyle(color: Colors.white)),
+                label: Text('Copy Link', style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
                   shape: RoundedRectangleBorder(
@@ -67,7 +67,7 @@ class _LinkState extends State<Link> {
               ElevatedButton.icon(
                 onPressed: _shareLink,
                 icon: Icon(Icons.share, color: Colors.white),
-                label: Text('Share Link',style: TextStyle(color: Colors.white)),
+                label: Text('Share Link', style: TextStyle(color: Colors.white)),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.purple,
                   shape: RoundedRectangleBorder(
