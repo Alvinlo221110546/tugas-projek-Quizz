@@ -23,7 +23,10 @@ dependencies:
   cached_network_image: ^3.3.1
   animated_text_kit: ^4.2.2
   carousel_slider: ^4.2.1
+<<<<<<< HEAD
   share_plus: ^9.0.0
+=======
+>>>>>>> d0f56fe0e33fd7cc0fb15a3ee674d13aa97ba9e8
    
  
 
