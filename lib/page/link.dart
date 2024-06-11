@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:share_plus/share_plus.dart';
 
-class Link extends StatefulWidget {
+class LinkPage extends StatefulWidget {
   @override
-  _LinkState createState() => _LinkState();
+  _LinkPageState createState() => _LinkPageState();
 }
 
-class _LinkState extends State<Link> {
+class _LinkPageState extends State<LinkPage> {
   final String downloadLink = "https://UPPSKILL.com";
 
   void _shareLink() async {

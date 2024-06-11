@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -9,7 +10,7 @@ class EnglishCourse extends StatelessWidget {
        appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,      
-        title: Text('English Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
+        title: Text('English Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
       ),
         body: SingleChildScrollView(
           child: Padding(
@@ -50,19 +51,19 @@ class EnglishCourse extends StatelessWidget {
                 EpisodeListItem(
                   episodeTitle: 'Episode 1: Introduction to Grammar',
                   onPressed: () {
-                    // Logic when Episode 1 button is pressed
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=O-6q-siuMik')));
                   },
                 ),
                 EpisodeListItem(
                   episodeTitle: 'Episode 2: Simple Present Tense',
                   onPressed: () {
-                    // Logic when Episode 2 button is pressed
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=i4rv6dgh_nY')));
                   },
                 ),
                 EpisodeListItem(
                   episodeTitle: 'Episode 3: Past Tense',
                   onPressed: () {
-                    // Logic when Episode 3 button is pressed
+                       Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=CApPEgntWag')));
                   },
                 ),
                 SizedBox(height: 20),

@@ -1,18 +1,25 @@
-
 import 'package:flutter/material.dart';
+import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 
 class InvestCourse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.purple,      
-        title: Text('Investment Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
-      ),
+          iconTheme: IconThemeData(color: Colors.white),
+          backgroundColor: Colors.purple,
+          title:
+              Text('Investment Course', style: TextStyle(color: Colors.white)),
+          actions: [
+            IconButton(
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => LinkPage()));
+                },
+                icon: Icon(Icons.share))
+          ]),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -64,7 +71,12 @@ class InvestCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=qIw-yFC-HNU');
+                        print('play');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=qIw-yFC-HNU')));
                       },
                       child: Text('Watch Now',
                           style: TextStyle(fontSize: 12, color: Colors.white)),
@@ -84,7 +96,12 @@ class InvestCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=T37YvxMTofc');
+                        print('play');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=T37YvxMTofc')));
                       },
                       child: Text('Watch Now',
                           style: TextStyle(fontSize: 12, color: Colors.white)),
@@ -104,7 +121,13 @@ class InvestCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=qDZw_iKzJlI');
+                        print('play');
+
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=qDZw_iKzJlI')));
                       },
                       child: Text('Watch Now',
                           style: TextStyle(fontSize: 12, color: Colors.white)),
@@ -114,38 +137,38 @@ class InvestCourse extends StatelessWidget {
               ),
               SizedBox(height: 20),
               Text(
-                  'User Reviews   (657)',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                'User Reviews   (657)',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 10),
-                UserReview(
-                  username: 'John Doe',
-                  rating: 4,
-                  review: 'Thanks Bud, very useful!',
+              ),
+              SizedBox(height: 10),
+              UserReview(
+                username: 'John Doe',
+                rating: 4,
+                review: 'Thanks Bud, very useful!',
+              ),
+              UserReview(
+                username: 'Alice Smith',
+                rating: 5,
+                review: 'Excellent experience, highly recommend!',
+              ),
+              UserReview(
+                username: 'Bob Johnson',
+                rating: 3,
+                review: 'This is so cool, maybe could use some improvements.',
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Write your review:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                UserReview(
-                  username: 'Alice Smith',
-                  rating: 5,
-                  review: 'Excellent experience, highly recommend!',
-                ),
-                UserReview(
-                  username: 'Bob Johnson',
-                  rating: 3,
-                  review: 'This is so cool, maybe could use some improvements.',
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Write your review:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                ReviewTextBox(),
+              ),
+              SizedBox(height: 10),
+              ReviewTextBox(),
             ],
           ),
         ),
@@ -153,20 +176,6 @@ class InvestCourse extends StatelessWidget {
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 class UserReview extends StatelessWidget {
   final String username;
@@ -283,17 +292,9 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
     );
   }
 
-
-
-
-
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
 }
-
-
-
-

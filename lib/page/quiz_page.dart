@@ -1114,7 +1114,7 @@ class _QuizPageState extends State<QuizPage> {
         actions: [
           IconButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => Link()));
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LinkPage()));
             },
             icon: Icon(Icons.share),
           ),

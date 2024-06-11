@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -11,7 +12,7 @@ class OfficeCourse extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,      
-        title: Text('Office Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
+        title: Text('Office Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -64,7 +65,12 @@ class OfficeCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=ighIUg4WfTA&pp=ygUdbWlrcm9zb2Z0IG9mZmljZSBpbnRyb2R1Y3Rpb24%3D');
+                        print('play');
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=ighIUg4WfTA&pp=ygUdbWlrcm9zb2Z0IG9mZmljZSBpbnRyb2R1Y3Rpb24%3D')));
                       },
                       child: Text('Watch Now',
                           style: TextStyle(fontSize: 12, color: Colors.white)),
@@ -85,7 +91,12 @@ class OfficeCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=6WgvzCU3TI8');
+                        print('play');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=6WgvzCU3TI8')));
                       },
                       child: Text('Watch Now',
                           style: TextStyle(fontSize: 12, color: Colors.white)),
@@ -105,7 +116,12 @@ class OfficeCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=Fvrtt0h84Mg');
+                        print('play');
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=Fvrtt0h84Mg')));
                       },
                       child: Text('Watch Now',
                           style: TextStyle(fontSize: 12, color: Colors.white)),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -9,7 +10,7 @@ class DataCourse extends StatelessWidget {
          appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,      
-        title: Text('Data Analysis Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
+        title: Text('Data Analysis Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
       ),
         body: SingleChildScrollView(
           child: Padding(
@@ -51,19 +52,19 @@ class DataCourse extends StatelessWidget {
                 EpisodeListItem(
                   episodeTitle: 'Episode 1: Introduction to Data Analysis',
                   onPressed: () {
-                    // Logic when Episode 1 button is pressed
+                     Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=yZvFH7B6gKI')));
                   },
                 ),
                 EpisodeListItem(
                   episodeTitle: 'Episode 2: Scrapping Data Using Python',
                   onPressed: () {
-                    // Logic when Episode 2 button is pressed
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=aClnnoQK9G0&list=PLQOGKy2nPhxnJ6bOB9ELnEev91K6Lcix6')));
                   },
                 ),
                 EpisodeListItem(
                   episodeTitle: 'Episode 3: Data Cleaning and Analysis',
                   onPressed: () {
-                    // Logic when Episode 3 button is pressed
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=jxq4-KSB_OA')));
                   },
                 ),
                 SizedBox(height: 20),

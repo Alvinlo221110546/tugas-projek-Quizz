@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 
 class AccountingCourse extends StatelessWidget {
   @override
@@ -9,9 +7,16 @@ class AccountingCourse extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.purple,      
-        title: Text('Accounting Course',style: TextStyle(color: Colors.white)),
-        actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))],
+        backgroundColor: Colors.purple,
+        title: Text('Accounting Course', style: TextStyle(color: Colors.white)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => Link()));
+            },
+            icon: Icon(Icons.share),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -19,34 +24,7 @@ class AccountingCourse extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FutureBuilder<String?>(
-                future: Future.value(YoutubePlayer.convertUrlToId(
-                    'https://youtu.be/gPBhGkBN30s?si=VEEenM8DGvL05X73')), //Link Video course youtube
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    final videoId = snapshot.data;
-                    if (videoId != null && videoId.isNotEmpty) {
-                      return YoutubePlayer(
-                        controller: YoutubePlayerController(
-                          initialVideoId: videoId,
-                          flags: YoutubePlayerFlags(
-                            autoPlay: false,
-                            mute: false,
-                          ),
-                        ),
-                        showVideoProgressIndicator: true,
-                      );
-                    } else {
-                      return Text('Invalid YouTube URL');
-                    }
-                  }
-                },
-              ),
-              // Bagian Daftar Episode
+              YoutubePlayerWidget('https://youtu.be/gPBhGkBN30s?si=VEEenM8DGvL05X73'), // Link Video course youtube
               SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,10 +42,9 @@ class AccountingCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=bG963a00ZvM');
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=bG963a00ZvM')));
                       },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
+                      child: Text('Watch Now', style: TextStyle(fontSize: 12, color: Colors.white)),
                     ),
                   ),
                   Divider(),
@@ -84,10 +61,9 @@ class AccountingCourse extends StatelessWidget {
                         ),
                       ),
                       onPressed: () {
-                        print('https://www.youtube.com/watch?v=yYX4bvQSqbo');
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=yYX4bvQSqbo')));
                       },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
+                      child: Text('Watch Now', style: TextStyle(fontSize: 12, color: Colors.white)),
                     ),
                   ),
                 ],
@@ -114,9 +90,8 @@ class AccountingCourse extends StatelessWidget {
               UserReview(
                 username: 'Bob Johnson',
                 rating: 3,
-                review: 'this so cool maybe, could use some improvements.',
+                review: 'This is so cool, maybe could use some improvements.',
               ),
-
               SizedBox(height: 20),
               Text(
                 'Write your review:',
@@ -135,19 +110,29 @@ class AccountingCourse extends StatelessWidget {
   }
 }
 
+class YoutubePlayerWidget extends StatelessWidget {
+  final String url;
 
+  YoutubePlayerWidget(this.url);
 
+  @override
+  Widget build(BuildContext context) {
+    final videoId = YoutubePlayer.convertUrlToId(url);
 
-
-
-
-
-
-
-
-
-
-
+    return videoId != null
+        ? YoutubePlayer(
+            controller: YoutubePlayerController(
+              initialVideoId: videoId,
+              flags: YoutubePlayerFlags(
+                autoPlay: false,
+                mute: false,
+              ),
+            ),
+            showVideoProgressIndicator: true,
+          )
+        : Text('Invalid YouTube URL');
+  }
+}
 
 class UserReview extends StatelessWidget {
   final String username;
@@ -196,7 +181,6 @@ class UserReview extends StatelessWidget {
               ),
             ),
           ),
-          //review
           SizedBox(height: 5),
           Text(review),
         ],
@@ -257,16 +241,11 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
               );
             }
           },
-          child: Text('Submit Review',
-              style: TextStyle(fontSize: 14, color: Colors.white)),
+          child: Text('Submit Review', style: TextStyle(fontSize: 14, color: Colors.white)),
         ),
       ],
     );
   }
-
-
-
-
 
   @override
   void dispose() {
@@ -275,4 +254,16 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
   }
 }
 
-
+class Link extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Share Link'),
+      ),
+      body: Center(
+        child: Text('Share link functionality here'),
+      ),
+    );
+  }
+}

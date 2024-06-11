@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -9,7 +10,7 @@ class MarketCourse extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,
-        title: Text('Marketing Course', style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>Link()));}, icon: Icon(Icons.share))]
+        title: Text('Marketing Course', style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -52,19 +53,31 @@ class MarketCourse extends StatelessWidget {
               EpisodeListItem(
                 episodeTitle: 'Episode 1: Introduction to Market',
                 onPressed: () {
-                  // Logic when Episode 1 button is pressed
+                  Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=QusJ4fpWQwA')));
                 },
               ),
               EpisodeListItem(
                 episodeTitle: 'Episode 2: Types of Markets',
                 onPressed: () {
-                  // Logic when Episode 2 button is pressed
+                  Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=Srg5iAp68rw')));
                 },
               ),
               EpisodeListItem(
                 episodeTitle: 'Episode 3: Market Analysis Techniques',
                 onPressed: () {
-                  // Logic when Episode 3 button is pressed
+                  Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => YoutubePlayerWidget(
+                                    'https://www.youtube.com/watch?v=n27NLTeqxUQ')));
                 },
               ),
               SizedBox(height: 20),
