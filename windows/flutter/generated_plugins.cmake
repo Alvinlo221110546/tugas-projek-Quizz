@@ -4,11 +4,8 @@
 
 list(APPEND FLUTTER_PLUGIN_LIST
   file_selector_windows
-<<<<<<< HEAD
   share_plus
   url_launcher_windows
-=======
->>>>>>> d0f56fe0e33fd7cc0fb15a3ee674d13aa97ba9e8
 )
 
 list(APPEND FLUTTER_FFI_PLUGIN_LIST
