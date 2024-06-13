@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -10,8 +9,7 @@ class InvestCourse extends StatelessWidget {
       appBar: AppBar(
           iconTheme: IconThemeData(color: Colors.white),
           backgroundColor: Colors.purple,
-          title:
-              Text('Investment Course', style: TextStyle(color: Colors.white)),
+          title: Text('Investment Course', style: TextStyle(color: Colors.white)),
           actions: [
             IconButton(
                 onPressed: () {
@@ -26,114 +24,25 @@ class InvestCourse extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FutureBuilder<String?>(
-                future: Future.value(YoutubePlayer.convertUrlToId(
-                    'https://www.youtube.com/watch?v=rMMnk6Yvxic')), //Link Video course youtube
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    final videoId = snapshot.data;
-                    if (videoId != null && videoId.isNotEmpty) {
-                      return YoutubePlayer(
-                        controller: YoutubePlayerController(
-                          initialVideoId: videoId,
-                          flags: YoutubePlayerFlags(
-                            autoPlay: false,
-                            mute: false,
-                          ),
-                        ),
-                        showVideoProgressIndicator: true,
-                      );
-                    } else {
-                      return Text('Invalid YouTube URL');
-                    }
-                  }
+              YoutubePlayerWidget('https://www.youtube.com/watch?v=rMMnk6Yvxic'),
+              SizedBox(height: 20),
+              EpisodeListItem(
+                episodeTitle: 'Episode 1: Introduction to Investment',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=qIw-yFC-HNU')));
                 },
               ),
-              // Bagian Daftar Episode
-              SizedBox(height: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ListTile(
-                    title: Text(
-                      'Episode 1: Introduction to Investment',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        print('play');
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=qIw-yFC-HNU')));
-                      },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(
-                      'Episode 2: Types of Investments',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        print('play');
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=T37YvxMTofc')));
-                      },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
-                    ),
-                  ),
-                  Divider(),
-                  ListTile(
-                    title: Text(
-                      'Episode 3: Risk\nManagement in Investment',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        print('play');
-
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=qDZw_iKzJlI')));
-                      },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
-                    ),
-                  ),
-                ],
+              EpisodeListItem(
+                episodeTitle: 'Episode 2: Types of Investments',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=T37YvxMTofc')));
+                },
+              ),
+              EpisodeListItem(
+                episodeTitle: 'Episode 3: Risk Management in Investment',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=qDZw_iKzJlI')));
+                },
               ),
               SizedBox(height: 20),
               Text(
@@ -173,6 +82,79 @@ class InvestCourse extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class YoutubePlayerWidget extends StatelessWidget {
+  final String url;
+
+  YoutubePlayerWidget(this.url);
+
+  @override
+  Widget build(BuildContext context) {
+    final videoId = YoutubePlayer.convertUrlToId(url);
+
+    if (videoId == null) {
+      return Text('Invalid YouTube URL');
+    }
+
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ),
+        ),
+        showVideoProgressIndicator: true,
+      ),
+      builder: (context, player) {
+        return Column(
+          children: [
+            player,
+          ],
+        );
+      },
+    );
+  }
+}
+
+class EpisodeListItem extends StatelessWidget {
+  final String episodeTitle;
+  final VoidCallback onPressed;
+
+  const EpisodeListItem({
+    Key? key,
+    required this.episodeTitle,
+    required this.onPressed,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ListTile(
+          title: Text(
+            episodeTitle,
+            style: TextStyle(fontSize: 20),
+          ),
+          trailing: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.purple,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+            ),
+            onPressed: onPressed,
+            child: Text('Watch Now',
+                style: TextStyle(fontSize: 12, color: Colors.white)),
+          ),
+        ),
+        Divider(),
+      ],
     );
   }
 }
@@ -224,7 +206,6 @@ class UserReview extends StatelessWidget {
               ),
             ),
           ),
-          //review
           SizedBox(height: 5),
           Text(review),
         ],

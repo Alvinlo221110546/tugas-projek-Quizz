@@ -1,9 +1,6 @@
-
 import 'package:flutter/material.dart';
-import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 
 class OfficeCourse extends StatelessWidget {
   @override
@@ -11,8 +8,16 @@ class OfficeCourse extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.purple,      
-        title: Text('Office Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
+        backgroundColor: Colors.purple,
+        title: Text('Office Course', style: TextStyle(color: Colors.white)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LinkPage()));
+            },
+            icon: Icon(Icons.share),
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -20,149 +25,61 @@ class OfficeCourse extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              FutureBuilder<String?>(
-                future: Future.value(YoutubePlayer.convertUrlToId(
-                    'https://youtu.be/gPBhGkBN30s?si=VEEenM8DGvL05X73')), //Link Video course youtube
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    final videoId = snapshot.data;
-                    if (videoId != null && videoId.isNotEmpty) {
-                      return YoutubePlayer(
-                        controller: YoutubePlayerController(
-                          initialVideoId: videoId,
-                          flags: YoutubePlayerFlags(
-                            autoPlay: false,
-                            mute: false,
-                          ),
-                        ),
-                        showVideoProgressIndicator: true,
-                      );
-                    } else {
-                      return Text('Invalid YouTube URL');
-                    }
-                  }
-                },
-              ),
-              // Bagian Daftar Episode
+              YoutubePlayerWidget('https://youtu.be/gPBhGkBN30s?si=VEEenM8DGvL05X73'),
               SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  ListTile(
-                    title: Text(
-                      'Episode 1: Introduction to Office Tools',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        print('play');
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=ighIUg4WfTA&pp=ygUdbWlrcm9zb2Z0IG9mZmljZSBpbnRyb2R1Y3Rpb24%3D')));
-                      },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
-                    ),
+                  EpisodeListItem(
+                    title: 'Episode 1: Introduction to Office Tools',
+                    url: 'https://www.youtube.com/watch?v=ighIUg4WfTA&pp=ygUdbWlrcm9zb2Z0IG9mZmljZSBpbnRyb2R1Y3Rpb24%3D',
                   ),
                   Divider(),
-                  
-                  ListTile(
-                    title: Text(
-                      'Episode 2: Excel Basics',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        print('play');
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=6WgvzCU3TI8')));
-                      },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
-                    ),
+                  EpisodeListItem(
+                    title: 'Episode 2: Excel Basics',
+                    url: 'https://www.youtube.com/watch?v=6WgvzCU3TI8',
                   ),
                   Divider(),
-                      ListTile(
-                    title: Text(
-                      'Episode 3: Word Formatting',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                    trailing: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      onPressed: () {
-                        print('play');
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=Fvrtt0h84Mg')));
-                      },
-                      child: Text('Watch Now',
-                          style: TextStyle(fontSize: 12, color: Colors.white)),
-                    ),
+                  EpisodeListItem(
+                    title: 'Episode 3: Word Formatting',
+                    url: 'https://www.youtube.com/watch?v=Fvrtt0h84Mg',
                   ),
                 ],
               ),
               SizedBox(height: 20),
               Text(
-                  'User Reviews   (653)',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
+                'User Reviews   (653)',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 10),
-                UserReview(
-                  username: 'John Doe',
-                  rating: 4,
-                  review: 'Thanks Bud, very useful!',
+              ),
+              SizedBox(height: 10),
+              UserReview(
+                username: 'John Doe',
+                rating: 4,
+                review: 'Thanks Bud, very useful!',
+              ),
+              UserReview(
+                username: 'Alice Smith',
+                rating: 5,
+                review: 'Excellent experience, highly recommend!',
+              ),
+              UserReview(
+                username: 'Bob Johnson',
+                rating: 3,
+                review: 'This is so cool, maybe could use some improvements.',
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Write your review:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                UserReview(
-                  username: 'Alice Smith',
-                  rating: 5,
-                  review: 'Excellent experience, highly recommend!',
-                ),
-                UserReview(
-                  username: 'Bob Johnson',
-                  rating: 3,
-                  review: 'This is so cool, maybe could use some improvements.',
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Write your review:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                ReviewTextBox(),
+              ),
+              SizedBox(height: 10),
+              ReviewTextBox(),
             ],
           ),
         ),
@@ -171,19 +88,41 @@ class OfficeCourse extends StatelessWidget {
   }
 }
 
+class EpisodeListItem extends StatelessWidget {
+  final String title;
+  final String url;
 
+  const EpisodeListItem({
+    Key? key,
+    required this.title,
+    required this.url,
+  }) : super(key: key);
 
-
-
-
-
-
-
-
-
-
-
-
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        title,
+        style: TextStyle(fontSize: 20),
+      ),
+      trailing: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Colors.purple,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(20),
+          ),
+        ),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => YoutubePlayerWidget(url)),
+          );
+        },
+        child: Text('Watch Now', style: TextStyle(fontSize: 12, color: Colors.white)),
+      ),
+    );
+  }
+}
 
 class UserReview extends StatelessWidget {
   final String username;
@@ -232,7 +171,6 @@ class UserReview extends StatelessWidget {
               ),
             ),
           ),
-          //review
           SizedBox(height: 5),
           Text(review),
         ],
@@ -293,16 +231,11 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
               );
             }
           },
-          child: Text('Submit Review',
-              style: TextStyle(fontSize: 14, color: Colors.white)),
+          child: Text('Submit Review', style: TextStyle(fontSize: 14, color: Colors.white)),
         ),
       ],
     );
   }
-
-
-
-
 
   @override
   void dispose() {
@@ -311,4 +244,37 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
   }
 }
 
+class YoutubePlayerWidget extends StatelessWidget {
+  final String url;
 
+  YoutubePlayerWidget(this.url);
+
+  @override
+  Widget build(BuildContext context) {
+    final videoId = YoutubePlayer.convertUrlToId(url);
+
+    if (videoId == null) {
+      return Text('Invalid YouTube URL');
+    }
+
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ),
+        ),
+        showVideoProgressIndicator: true,
+      ),
+      builder: (context, player) {
+        return Column(
+          children: [
+            player,
+          ],
+        );
+      },
+    );
+  }
+}

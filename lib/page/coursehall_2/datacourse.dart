@@ -1,112 +1,90 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/coursehall_2/accounting.dart';
-import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+import 'package:quizz/page/link.dart';
 
 class DataCourse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         appBar: AppBar(
+      appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
-        backgroundColor: Colors.purple,      
-        title: Text('Data Analysis Course',style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
+        backgroundColor: Colors.purple,
+        title: Text('Data Analysis Course', style: TextStyle(color: Colors.white)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LinkPage()));
+            },
+            icon: Icon(Icons.share),
+          ),
+        ],
       ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 20),
-                FutureBuilder<String?>(
-                future: Future.value(YoutubePlayer.convertUrlToId(
-                    'https://www.youtube.com/watch?v=CaqJ65CIoMw')), //Link Video course youtube
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    final videoId = snapshot.data;
-                    if (videoId != null && videoId.isNotEmpty) {
-                      return YoutubePlayer(
-                        controller: YoutubePlayerController(
-                          initialVideoId: videoId,
-                          flags: YoutubePlayerFlags(
-                            autoPlay: false,
-                            mute: false,
-                          ),
-                        ),
-                        showVideoProgressIndicator: true,
-                      );
-                    } else {
-                      return Text('Invalid YouTube URL');
-                    }
-                  }
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              YoutubePlayerWidget('https://www.youtube.com/watch?v=CaqJ65CIoMw'),
+              SizedBox(height: 20),
+              EpisodeListItem(
+                episodeTitle: 'Episode 1: Introduction to Data Analysis',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=yZvFH7B6gKI')));
                 },
               ),
-                SizedBox(height: 20),
-                
-       
-                EpisodeListItem(
-                  episodeTitle: 'Episode 1: Introduction to Data Analysis',
-                  onPressed: () {
-                     Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=yZvFH7B6gKI')));
-                  },
+              EpisodeListItem(
+                episodeTitle: 'Episode 2: Scrapping Data Using Python',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=aClnnoQK9G0&list=PLQOGKy2nPhxnJ6bOB9ELnEev91K6Lcix6')));
+                },
+              ),
+              EpisodeListItem(
+                episodeTitle: 'Episode 3: Data Cleaning and Analysis',
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=jxq4-KSB_OA')));
+                },
+              ),
+              SizedBox(height: 20),
+              Text(
+                'User Reviews   (237)',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
                 ),
-                EpisodeListItem(
-                  episodeTitle: 'Episode 2: Scrapping Data Using Python',
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=aClnnoQK9G0&list=PLQOGKy2nPhxnJ6bOB9ELnEev91K6Lcix6')));
-                  },
+              ),
+              SizedBox(height: 10),
+              UserReview(
+                username: 'John Doe',
+                rating: 4,
+                review: 'Thanks Bud, very useful!',
+              ),
+              UserReview(
+                username: 'Alice Smith',
+                rating: 5,
+                review: 'Excellent experience, highly recommend!',
+              ),
+              UserReview(
+                username: 'Bob Johnson',
+                rating: 3,
+                review: 'This is so cool, maybe could use some improvements.',
+              ),
+              SizedBox(height: 20),
+              Text(
+                'Write your review:',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
                 ),
-                EpisodeListItem(
-                  episodeTitle: 'Episode 3: Data Cleaning and Analysis',
-                  onPressed: () {
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=jxq4-KSB_OA')));
-                  },
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'User Reviews   (237)',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                UserReview(
-                  username: 'John Doe',
-                  rating: 4,
-                  review: 'Thanks Bud, very useful!',
-                ),
-                UserReview(
-                  username: 'Alice Smith',
-                  rating: 5,
-                  review: 'Excellent experience, highly recommend!',
-                ),
-                UserReview(
-                  username: 'Bob Johnson',
-                  rating: 3,
-                  review: 'This is so cool, maybe could use some improvements.',
-                ),
-                SizedBox(height: 20),
-                Text(
-                  'Write your review:',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                SizedBox(height: 10),
-                ReviewTextBox(),
-              ],
-            ),
+              ),
+              SizedBox(height: 10),
+              ReviewTextBox(),
+            ],
           ),
         ),
-      );
-    
+      ),
+    );
   }
 }
 
@@ -225,15 +203,14 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
         SizedBox(height: 10),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.purple,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
+            backgroundColor: Colors.purple,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+          ),
           onPressed: () {
             String review = _controller.text;
             print('Review submitted: $review');
-           
             _controller.clear();
           },
           child: Text('Submit Review', style: TextStyle(color: Colors.white)),
@@ -246,5 +223,40 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
   void dispose() {
     _controller.dispose();
     super.dispose();
+  }
+}
+
+class YoutubePlayerWidget extends StatelessWidget {
+  final String url;
+
+  YoutubePlayerWidget(this.url);
+
+  @override
+  Widget build(BuildContext context) {
+    final videoId = YoutubePlayer.convertUrlToId(url);
+
+    if (videoId == null) {
+      return Text('Invalid YouTube URL');
+    }
+
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ),
+        ),
+        showVideoProgressIndicator: true,
+      ),
+      builder: (context, player) {
+        return Column(
+          children: [
+            player,
+          ],
+        );
+      },
+    );
   }
 }

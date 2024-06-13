@@ -119,18 +119,29 @@ class YoutubePlayerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final videoId = YoutubePlayer.convertUrlToId(url);
 
-    return videoId != null
-        ? YoutubePlayer(
-            controller: YoutubePlayerController(
-              initialVideoId: videoId,
-              flags: YoutubePlayerFlags(
-                autoPlay: false,
-                mute: false,
-              ),
-            ),
-            showVideoProgressIndicator: true,
-          )
-        : Text('Invalid YouTube URL');
+    if (videoId == null) {
+      return Text('Invalid YouTube URL');
+    }
+
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ),
+        ),
+        showVideoProgressIndicator: true,
+      ),
+      builder: (context, player) {
+        return Column(
+          children: [
+            player,
+          ],
+        );
+      },
+    );
   }
 }
 

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/coursehall_2/accounting.dart';
 import 'package:quizz/page/link.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -10,7 +9,15 @@ class MarketCourse extends StatelessWidget {
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,
-        title: Text('Marketing Course', style: TextStyle(color: Colors.white)),actions: [IconButton(onPressed: (){Navigator.push(context, MaterialPageRoute(builder: (context)=>LinkPage()));}, icon: Icon(Icons.share))]
+        title: Text('Marketing Course', style: TextStyle(color: Colors.white)),
+        actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) => LinkPage()));
+            },
+            icon: Icon(Icons.share),
+          )
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -18,66 +25,24 @@ class MarketCourse extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Video course
+              YoutubePlayerWidget('https://www.youtube.com/watch?v=nkNHn0VqVBA'),
               SizedBox(height: 20),
-              FutureBuilder<String?>(
-                future: Future.value(YoutubePlayer.convertUrlToId(
-                    'https://www.youtube.com/watch?v=nkNHn0VqVBA')),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return CircularProgressIndicator();
-                  } else if (snapshot.hasError) {
-                    return Text('Error: ${snapshot.error}');
-                  } else {
-                    final videoId = snapshot.data;
-                    if (videoId != null && videoId.isNotEmpty) {
-                      return YoutubePlayer(
-                        controller: YoutubePlayerController(
-                          initialVideoId: videoId,
-                          flags: YoutubePlayerFlags(
-                            autoPlay: false,
-                            mute: false,
-                          ),
-                        ),
-                        showVideoProgressIndicator: true,
-                      );
-                    } else {
-                      return Text('Invalid YouTube URL');
-                    }
-                  }
-                },
-              ),
-              // Bagian episode
-              SizedBox(height: 20),
-
               EpisodeListItem(
                 episodeTitle: 'Episode 1: Introduction to Market',
                 onPressed: () {
-                  Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=QusJ4fpWQwA')));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=QusJ4fpWQwA')));
                 },
               ),
               EpisodeListItem(
                 episodeTitle: 'Episode 2: Types of Markets',
                 onPressed: () {
-                  Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=Srg5iAp68rw')));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=Srg5iAp68rw')));
                 },
               ),
               EpisodeListItem(
                 episodeTitle: 'Episode 3: Market Analysis Techniques',
                 onPressed: () {
-                  Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => YoutubePlayerWidget(
-                                    'https://www.youtube.com/watch?v=n27NLTeqxUQ')));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => YoutubePlayerWidget('https://www.youtube.com/watch?v=n27NLTeqxUQ')));
                 },
               ),
               SizedBox(height: 20),
@@ -118,6 +83,41 @@ class MarketCourse extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class YoutubePlayerWidget extends StatelessWidget {
+  final String url;
+
+  YoutubePlayerWidget(this.url);
+
+  @override
+  Widget build(BuildContext context) {
+    final videoId = YoutubePlayer.convertUrlToId(url);
+
+    if (videoId == null) {
+      return Text('Invalid YouTube URL');
+    }
+
+    return YoutubePlayerBuilder(
+      player: YoutubePlayer(
+        controller: YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: YoutubePlayerFlags(
+            autoPlay: false,
+            mute: false,
+          ),
+        ),
+        showVideoProgressIndicator: true,
+      ),
+      builder: (context, player) {
+        return Column(
+          children: [
+            player,
+          ],
+        );
+      },
     );
   }
 }
@@ -243,12 +243,29 @@ class _ReviewTextBoxState extends State<ReviewTextBox> {
             ),
           ),
           onPressed: () {
-            String review = _controller.text;
-            print('Review submitted: $review');
-            _controller.clear();
+            String review = _controller.text.trim();
+            if (review.isNotEmpty) {
+              print('Review submitted: $review');
+              _controller.clear();
+            } else {
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: Text('Error'),
+                  content: Text('Please write your review before submitting.'),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('OK'),
+                    ),
+                  ],
+                ),
+              );
+            }
           },
-          child: Text('Submit Review',
-              style: TextStyle(fontSize: 14, color: Colors.white)),
+          child: Text('Submit Review', style: TextStyle(fontSize: 14, color: Colors.white)),
         ),
       ],
     );
