@@ -1,10 +1,6 @@
-
-import 'dart:html' as html;
 import 'dart:io';
 import 'package:camera/camera.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:quizz/page/Mainmenu.dart';
@@ -25,7 +21,6 @@ class _ProfilePageState extends State<ProfilePage> {
   File? _imageFile;
   String? _imageUrl;
   late CameraController? _controller;
- 
 
   @override
   void initState() {
@@ -34,7 +29,6 @@ class _ProfilePageState extends State<ProfilePage> {
     fullName = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].fullName : '');
     phone = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].phone : '');
     status = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].status : '');
-    
   }
 
   Future<void> _pickImage(ImageSource source) async {
@@ -44,19 +38,11 @@ class _ProfilePageState extends State<ProfilePage> {
         final bytes = await pickedImage.readAsBytes();
         final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
         profileProvider.changeProfilePicture(0, bytes);
-        setState(() {
-          _imageUrl = html.Url.createObjectUrlFromBlob(html.Blob([bytes]));
-        });
       }
     } catch (e) {
       print('Error picking image: $e');
     }
   }
-
-
-
-
-
 
   @override
   void dispose() {
@@ -88,16 +74,12 @@ class _ProfilePageState extends State<ProfilePage> {
                   CircleAvatar(
                     radius: 70,
                     backgroundColor: Colors.purple[200],
-                    backgroundImage: kIsWeb
-                       ? (_imageUrl!= null
-                           ? NetworkImage(_imageUrl!)
-                            : null) as ImageProvider<Object>?
-                        : (_imageFile!= null
-                           ? FileImage(_imageFile!)
-                            : null) as ImageProvider<Object>?,
-                    child: _imageFile == null && _imageUrl == null
-                       ? Icon(Icons.person, size: 70, color: Colors.white)
-                        : null,
+                    backgroundImage: profileProvider.account.isNotEmpty
+                            ? profileProvider.account[0].profilePicture != null
+                                ? MemoryImage(
+                                    profileProvider.account[0].profilePicture!)
+                                : null
+                            : null,
                   ),
                   Positioned(
                     bottom: 0,
@@ -124,7 +106,7 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>CameraScreen()));
+                                  Navigator.push(context, MaterialPageRoute(builder: (context) => CameraScreen()));
                                 },
                                 child: Text('Camera'),
                               ),
@@ -187,9 +169,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                   SizedBox(height: 8.0),
                   Text(
-                    profileProvider.account.isNotEmpty
-                       ? profileProvider.account[0].status
-                        : 'No status available',
+                    profileProvider.account.isNotEmpty ? profileProvider.account[0].status : 'No status available',
                     style: TextStyle(
                       fontSize: 16.0,
                     ),
@@ -226,14 +206,13 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton.extended(
-        
         onPressed: () {
-          if (_formKey.currentState?.validate()?? false) {
+          if (_formKey.currentState?.validate() ?? false) {
             setState(() {
               profileProvider.changeFullName(0, fullName.text);
               profileProvider.changePhone(0, phone.text);
               profileProvider.changeStatus(0, status.text);
-              final imageBytes = _imageFile!= null? _imageFile!.readAsBytesSync() : profileProvider.account[0].profilePicture;
+              final imageBytes = _imageFile != null ? _imageFile!.readAsBytesSync() : profileProvider.account[0].profilePicture;
               if (imageBytes != null) {
                 profileProvider.changeProfilePicture(0, imageBytes);
               } else {
@@ -251,3 +230,4 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
+

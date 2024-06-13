@@ -18,7 +18,7 @@ class Account {
     this.email = '',
     this.password = '',
     this.phone = '',
-    this.status = '',
+    this.status = 'No status available',
   });
 }
 
