@@ -19,7 +19,6 @@ class _ProfilePageState extends State<ProfilePage> {
   late TextEditingController phone;
   late TextEditingController status;
   File? _imageFile;
-  String? _imageUrl;
   late CameraController? _controller;
 
   @override

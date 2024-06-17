@@ -13,9 +13,10 @@ import 'package:quizz/page/coursehall_2/officecourse.dart';
 import 'package:quizz/page/enterCode.dart';
 import 'package:quizz/page/favourite.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:quizz/page/provider/favouriteprovider.dart';
 import 'package:quizz/page/provider/providerUser.dart';
 import 'package:quizz/page/register_page.dart';
-
+import 'package:quizz/page/quiz_page.dart';
 
 class HighlightedBorderIcon extends StatelessWidget {
   final IconData icon;
@@ -53,12 +54,247 @@ class MainMenu extends StatefulWidget {
 }
 
 class _mainMenuState extends State {
+  List<Map<String, String>> _allItems = [
+    {
+      'title': 'Data Analysis - become great',
+      'subtitle': 'Become Data Analysis in 1 Month',
+      'author': 'Pricillia-Teacher data analysis',
+      'image': 'assets/data.jpg',
+      'rating': '2.0',
+      'reviews': '(346)',
+      'course': 'DataCourse'
+    },
+    {
+      'title': 'Accounting - learn Accounting',
+      'subtitle': 'Accounting for work',
+      'author': 'vonnis-Accounting Teacher',
+      'image': 'assets/accounting.jpg',
+      'rating': '2.0',
+      'reviews': '(346)',
+      'course': 'AccountingCourse'
+    },
+    {
+      'title': 'English Course - Speak fluently',
+      'subtitle': 'Speak Fluently English in 1 Month',
+      'author': 'Regina-English Translator',
+      'image': 'assets/english.jpg',
+      'rating': '5.0',
+      'reviews': '(2357)',
+      'course': 'EnglishCourse'
+    },
+    {
+      'title': 'Investor - learn how to invest',
+      'subtitle': 'Became Rich not just dream',
+      'author': 'Jack-Stock Investor',
+      'image': 'assets/investment.jpg',
+      'rating': '4.0',
+      'reviews': '(12357)',
+      'course': 'InvestCourse'
+    },
+    {
+      'title': 'Marketing - market promote',
+      'subtitle': 'lesson about marketting',
+      'author': 'cumok-owner of jonomart',
+      'image': 'assets/marketing.jpg',
+      'rating': '5.0',
+      'reviews': '(657)',
+      'course': 'MarketCourse'
+    },
+    {
+      'title': 'Microsoft office (2024)',
+      'subtitle': 'Complete this course ',
+      'author': 'Kelvin-workers',
+      'image': 'assets/office.jpg',
+      'rating': '3.0',
+      'reviews': '(257)',
+      'course': 'OfficeCourse'
+    },
+    {
+      'title': 'PhotoShop - Photoshop Test',
+      'subtitle': 'Photoshop test for beginner',
+      'author': 'Alex-photo editor',
+      'image': 'assets/photoshop.jpg',
+      'rating': '5.0',
+      'reviews': '(60257)',
+      'quiz': 'Photoshopquiz'
+    },
+    {
+      'title': 'Python Advance - Hero to God',
+      'subtitle': 'pyhton Test for next level',
+      'author': 'Kelvin-Python Developer',
+      'image': 'assets/python.png',
+      'rating': '4.0',
+      'reviews': '(60257)',
+      'quiz': 'Phytonquiz'
+    },
+    {
+      'title': 'Unity for beginner Only',
+      'subtitle': 'Unity Beginner Test for newbie',
+      'author': 'maxpotato-Game Developer',
+      'image': 'assets/unity.jpg',
+      'rating': '5.0',
+      'reviews': '(2157)',
+      'quiz': 'Unityquiz'
+    },
+    {
+      'title': 'SQL for working',
+      'subtitle': 'SQL test for Databse master',
+      'author': 'Vonny-TOSHIBA company',
+      'image': '../assets/sql.jpeg',
+      'rating': '5.0',
+      'reviews': '(257)',
+      'quiz': 'Sqlquiz'
+    },
+    {
+      'title': 'Grapic Designer advance 2024',
+      'subtitle': 'Grapic Designer for the next level',
+      'author': 'John Muller-grapic designer',
+      'image': 'assets/design.jpg',
+      'rating': '2.0',
+      'reviews': '(57)',
+      'quiz': 'Grapicquiz'
+    },
+    {
+      'title': 'Algebra - menghitung aljabar',
+      'subtitle': 'Quiz aljabar untuk anak SMA',
+      'author': 'Rusman-Professor UI',
+      'image': '../assets/algebra.jpeg',
+      'rating': '5.0',
+      'reviews': '(60257)',
+      'quiz': 'Algebraquiz'
+    },
+    {
+      'title': 'Linear - Zero to God',
+      'subtitle': 'Linear Equation for beginner',
+      'author': 'alvin-USU lectture',
+      'image': '../assets/linear.jpeg',
+      'rating': '4.0',
+      'reviews': '(6057)',
+      'quiz': 'Linearquiz'
+    },
+    {
+      'title': 'Perhitungan Bangun Ruang',
+      'subtitle': 'Soal Perhitungan bangun ruang',
+      'author': 'Riki-Telkom lectture',
+      'image': '../assets/ruang.jpeg',
+      'rating': '5.0',
+      'reviews': '(2157)',
+      'quiz': 'Ruangquiz'
+    },
+    {
+      'title': 'Perhitungan Regresi Linear',
+      'subtitle': 'Kumpulan Soal regresi kelas 11',
+      'author': 'Vonny-Guru SMP Negri',
+      'image': '../assets/regresi.jpeg',
+      'rating': '5.0',
+      'reviews': '(257)',
+      'quiz': 'Regresiquiz'
+    },
+    {
+      'title': 'Tes Kecerdasan Matematika',
+      'subtitle': 'Tes kemampuan Anak Anda',
+      'author': 'John Smith-UINSU lectture',
+      'image': '../assets/matematikaSd.jpeg',
+      'rating': '2.0',
+      'reviews': '(57)',
+      'quiz': 'Kecerdasanquiz'
+    },
+    {
+      'title': 'FISIKA - Kumpulan Soal Fisika',
+      'subtitle': 'Kumpulan soal fisika kelas 12',
+      'author': 'vinal-Telkom lectture',
+      'image': '../assets/fisika.jpeg',
+      'rating': '5.0',
+      'reviews': '(60257)',
+      'quiz': 'fisikaquiz'
+    },
+    {
+      'title': 'Biology Advance - Human to God',
+      'subtitle': 'Biology Test for UTBK',
+      'author': 'Kelvin-Professor UI',
+      'image': '../assets/biologi.jpeg',
+      'rating': '4.0',
+      'reviews': '(6057)',
+      'quiz': 'Biologyquiz'
+    },
+    {
+      'title': 'Perhitungan Suhu SMP',
+      'subtitle': 'Soal-Soal perhitungan Suhu kelas 7',
+      'author': 'mistia-science lectture',
+      'image': '../assets/suhu.jpeg',
+      'rating': '5.0',
+      'reviews': '(2157)',
+      'quiz': 'Suhuquiz'
+    },
+    {
+      'title': 'Pengetahuan Umum Sains',
+      'subtitle': 'how Science works?, come and test',
+      'author': 'Vanny-BioTech company',
+      'image': '../assets/umumscience.jpeg',
+      'rating': '5.0',
+      'reviews': '(257)',
+      'quiz': 'Sainsquiz'
+    },
+    {
+      'title': 'Astronomi Calculation advance',
+      'subtitle': 'Astronomi for the next level',
+      'author': 'John Makar-VIO Company',
+      'image': '../assets/astro.jpeg',
+      'rating': '2.0',
+      'reviews': '(57)',
+      'quiz': 'Astronomiquiz'
+    },
+    {
+      'title': 'English - Elementry Level',
+      'subtitle': 'Elementry Level Test',
+      'author': 'Alexa-UI lectture',
+      'image': '../assets/englishlv1.jpeg',
+      'rating': '5.0',
+      'reviews': '(60257)',
+      'quiz': 'Elementryquiz'
+    },
+    {
+      'title': 'english Advance - Hero to God',
+      'subtitle': 'english next level Test',
+      'author': 'Faker-UI lectture',
+      'image': '../assets/englishlv2.jpeg',
+      'rating': '4.0',
+      'reviews': '(6057)',
+      'quiz': 'advancequiz'
+    },
+    {
+      'title': 'English Test for intermedite level',
+      'subtitle': 'Hard Level English Test',
+      'author': 'max-UI lectture',
+      'image': '../assets/englishlv3.jpeg',
+      'rating': '5.0',
+      'reviews': '(2157)',
+      'quiz': 'hardquiz'
+    },
+    {
+      'title': 'C1 English Quiz',
+      'subtitle': 'C1 English Test',
+      'author': 'Vonna-UINSU lectture',
+      'image': '../assets/englishlv4.jpeg',
+      'rating': '5.0',
+      'reviews': '(257)',
+      'quiz': 'C1quiz'
+    },
+    {
+      'title': 'English Test advance 2024',
+      'subtitle': 'English Test for the next level',
+      'author': 'John Doe-UI lectture',
+      'image': '../assets/englishlv5.jpeg',
+      'rating': '2.0',
+      'reviews': '(57)',
+      'quiz': 'nextlvlquiz'
+    }
+  ];
+  List<Map<String, String>> _filteredItems = [];
   final ScrollController _scrollController = ScrollController();
   int _selectedIndex = 0;
   bool _isVisible = false;
   bool _showBanner = true;
- 
-
 
   void _onItemTapped(int index) {
     _selectedIndex = index;
@@ -96,46 +332,41 @@ class _mainMenuState extends State {
     );
   }
 
-    void _showSuccess() {
-    setState(() {
-    });
+  void _showSuccess() {
+    setState(() {});
     Future.delayed(Duration(seconds: 1), () {
-      setState(() {
-      });
-       _showSuccessDialog();
+      setState(() {});
+      _showSuccessDialog();
     });
-   
   }
 
- void _showSuccessDialog() {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      Future.delayed(Duration(seconds: 4), () {
-        Navigator.of(context).pop();
-      }); 
+  void _showSuccessDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 4), () {
+          Navigator.of(context).pop();
+        });
 
-      return Dialog(
-        child: Container(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CachedNetworkImage(
-                imageUrl:
-                    'https://www.bing.com/th/id/OGC.35f323bc5b41dc4269001529e3ff1278?pid=1.7&rurl=https%3a%2f%2fcdn.dribbble.com%2fusers%2f39201%2fscreenshots%2f3694057%2fmedia%2f2a1b062114a8244102f67deeb89395fa.gif&ehk=UKQWUom9EAuMfI5A9sAGuRTzi%2fdQT1KVKBkUf%2fajUv8%3d',
-                placeholder: (context, url) => CircularProgressIndicator(),
-                errorWidget: (context, url, error) => Icon(Icons.error),
-              ),
-            ],
+        return Dialog(
+          child: Container(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CachedNetworkImage(
+                  imageUrl:
+                      'https://www.bing.com/th/id/OGC.35f323bc5b41dc4269001529e3ff1278?pid=1.7&rurl=https%3a%2f%2fcdn.dribbble.com%2fusers%2f39201%2fscreenshots%2f3694057%2fmedia%2f2a1b062114a8244102f67deeb89395fa.gif&ehk=UKQWUom9EAuMfI5A9sAGuRTzi%2fdQT1KVKBkUf%2fajUv8%3d',
+                  placeholder: (context, url) => CircularProgressIndicator(),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
+                ),
+              ],
+            ),
           ),
-        ),
-      );
-    },
-  );
-}
-
-
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -219,56 +450,55 @@ class _mainMenuState extends State {
         ],
       ),
       drawer: DashboardModal(),
-     bottomNavigationBar: BottomNavigationBar(
-  items: <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Home',
-        child: IconButton(
-          icon: Icon(Icons.home),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MainMenu()));
-          },
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Tooltip(
+              message: 'Home',
+              child: IconButton(
+                icon: Icon(Icons.home),
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MainMenu()));
+                },
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Tooltip(
+              message: 'Search',
+              child: IconButton(
+                icon: Icon(Icons.search),
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+                },
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Tooltip(
+              message: 'Favorite',
+              child: IconButton(
+                icon: Icon(Icons.favorite),
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Favourite()));
+                },
+              ),
+            ),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.purple,
+        onTap: _onItemTapped,
       ),
-      label: '', 
-    ),
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Search',
-        child: IconButton(
-          icon: Icon(Icons.search),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
-          },
-        ),
-      ),
-      label: '', 
-    ),
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Favorite',
-        child: IconButton(
-          icon: Icon(Icons.favorite),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => Favourite()));
-          },
-        ),
-      ),
-      label: '', 
-    ),
-  ],
-  currentIndex: _selectedIndex,
-  selectedItemColor: Colors.purple,
-  onTap: _onItemTapped,
-),
-
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Padding(
@@ -276,72 +506,74 @@ class _mainMenuState extends State {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            if (profileProvider.account.isEmpty && _showBanner)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: MaterialBanner(
-                content: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'It looks like you don’t have an account yet. Sign in to unlock more features, or continue as a guest.',
-                        textAlign: TextAlign.left,
-                        style: TextStyle(fontSize: 16),
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
+              if (profileProvider.account.isEmpty && _showBanner)
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  child: MaterialBanner(
+                    content: Container(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          InkWell(
-                            onTap: () {
-                              Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>RegisterPage()));
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                             
-                              child: Text(
-                                'Register',
-                                style: TextStyle(
-                                  color: Colors.purple,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                          Text(
+                            'It looks like you don’t have an account yet. Sign in to unlock more features, or continue as a guest.',
+                            textAlign: TextAlign.left,
+                            style: TextStyle(fontSize: 16),
                           ),
-                          SizedBox(width: 10),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                _showBanner = false;
-                              });
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-                              
-                              child: Text(
-                                'Continue as Guest',
-                                style: TextStyle(
-                                  color: Colors.purple,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              RegisterPage()));
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: Text(
+                                    'Register',
+                                    style: TextStyle(
+                                      color: Colors.purple,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
                                 ),
                               ),
-                            ),
+                              SizedBox(width: 10),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    _showBanner = false;
+                                  });
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 10, vertical: 10),
+                                  child: Text(
+                                    'Continue as Guest',
+                                    style: TextStyle(
+                                      color: Colors.purple,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
+                    ),
+                    actions: [Container()],
                   ),
-                ), actions: [
-                  Container()
-                ],
-                
-              ),
-            ),
+                ),
               Container(
                 color: Color(0xA8CD9F),
                 height: 50,
@@ -351,35 +583,35 @@ class _mainMenuState extends State {
                     children: [
                       TextButton(
                         onPressed: () {
-                          _scrollTo(720);
+                          _scrollTo(810);
                         },
                         child: Text("Komputer & IT"),
                       ),
                       SizedBox(width: 50),
                       TextButton(
                         onPressed: () {
-                          _scrollTo(1930);
+                          _scrollTo(2100);
                         },
                         child: Text("English "),
                       ),
                       SizedBox(width: 50),
                       TextButton(
                         onPressed: () {
-                          _scrollTo(170);
+                          _scrollTo(298);
                         },
                         child: Text("COURSE"),
                       ),
                       SizedBox(width: 50),
                       TextButton(
                         onPressed: () {
-                          _scrollTo(1125);
+                          _scrollTo(1245);
                         },
                         child: Text("Mathematics"),
                       ),
                       SizedBox(width: 50),
                       TextButton(
                         onPressed: () {
-                          _scrollTo(1535);
+                          _scrollTo(1665);
                         },
                         child: Text("Science"),
                       ),
@@ -432,524 +664,11 @@ class _mainMenuState extends State {
               SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
                 child: Row(
-                  children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/data.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Data Analysis - become great ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Become Data Analysis in 1 Month ",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nPricillia-Teacher data analysis",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("2.0"),
-                                  SizedBox(width: 5),
-                                  Text("(346)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => DataCourse()));
-                                },
-                                child: Text(
-                                  'Learn Here',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/accounting.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Accounting - learn Accounting ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Accounting for work ",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nvonnis-Accounting Teacher",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("2.0"),
-                                  SizedBox(width: 5),
-                                  Text("(346)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: ((context) =>
-                                              AccountingCourse())));
-                                },
-                                child: Text(
-                                  'Learn Here',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/english.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "English Course - Speak fluently ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Speak Fluently English in 1 Month",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nRegina-English Translator",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(2357)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              EnglishCourse()));
-                                },
-                                child: Text(
-                                  'Learn Here',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/investment.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Investor - learn how to invest",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Became Rich not just dream ",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Dibuat oleh\nJack-Stock Investor",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star_border),
-                                SizedBox(width: 5),
-                                Text("4.0"),
-                                SizedBox(width: 5),
-                                Text("(12357)"),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              InvestCourse()));
-                                },
-                                child: Text(
-                                  'Learn Here',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20, left: 5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/marketing.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Marketing - market promote",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "lesson about marketting",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Dibuat oleh\ncumok-owner of jonomart",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(657)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              MarketCourse()));
-                                },
-                                child: Text(
-                                  'Learn Here',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/office.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Microsoft office (2024)",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Complete this course ",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nKelvin-workers",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star_border),
-                                Icon(Icons.star_border),
-                                SizedBox(width: 5),
-                                Text("3.0"),
-                                SizedBox(width: 5),
-                                Text("(257)"),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              OfficeCourse()));
-                                },
-                                child: Text(
-                                  'Learn Here',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                  ],
+                  children: _allItems
+                      .where((item) => item.containsKey('course'))
+                      .map((item) {
+                    return buildCourseCard(item);
+                  }).toList(),
                 ),
               ),
               SizedBox(height: 50),
@@ -997,421 +716,21 @@ class _mainMenuState extends State {
               SizedBox(height: 20),
               //tampilan kedua bagian dua
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/photoshop.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "PhotoShop - Photoshop Test",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Photoshop test for beginner",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nAlex-photo editor",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(60257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: _allItems
+                            .where((item) => item.containsKey('quiz'))
+                            .take(5)
+                            .map((item) {
+                          return buildQuizCard(item);
+                        }).toList(),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/python.png',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Python Advance - Hero to God ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "pyhton Test for next level",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nKelvin-Python Developer",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("4.0"),
-                                  SizedBox(width: 5),
-                                  Text("(6057)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/unity.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Unity for beginner Only",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Unity Beginner Test for newbie",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nmaxpotato-Game Developer",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(2157)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/sql.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "SQL for working",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "SQL test for Databse master",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nVonny-TOSHIBA company",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('assets/design.jpg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Grapic Designer advance 2024",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Grapic Designer for the next level",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nJohn Muller-grapic designer",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("2.0"),
-                                  SizedBox(width: 5),
-                                  Text("(57)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),
@@ -1452,425 +771,22 @@ class _mainMenuState extends State {
               SizedBox(height: 20),
 
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/algebra.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Algebra - menghitung aljabar ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Quiz aljabar untuk anak SMA ",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nRusman-Professor UI",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(60257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: _allItems
+                            .where((item) => item.containsKey('quiz'))
+                            .skip(5)
+                            .take(5)
+                            .map((item) {
+                          return buildQuizCard(item);
+                        }).toList(),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/linear.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Linear - Zero to God ",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Linear Equation for beginner",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nalvin-USU lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Row(
-                              children: [
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star, color: Colors.yellow),
-                                Icon(Icons.star_border),
-                                SizedBox(width: 5),
-                                Text("4.0"),
-                                SizedBox(width: 5),
-                                Text("(6057)"),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/ruang.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Perhitungan Bangun Ruang",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Soal Perhitungan bangun ruang ",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nRiki-Telkom lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(2157)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/regresi.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Perhitungan Regresi Linear",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Kumpulan Soal regresi kelas 11",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nVonny-Guru SMP Negri",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/matematikaSd.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Tes Kecerdasan Matematika",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Tes kemampuan Anak Anda",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nJohn Smith-UINSU lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("2.0"),
-                                  SizedBox(width: 5),
-                                  Text("(57)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),
@@ -1911,425 +827,22 @@ class _mainMenuState extends State {
               SizedBox(height: 20),
 
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/fisika.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "FISIKA - Kumpulan Soal Fisika",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Kumpulan soal fisika kelas 12 ",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nvinal-Telkom lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(60257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: _allItems
+                            .where((item) => item.containsKey('quiz'))
+                            .skip(10)
+                            .take(5)
+                            .map((item) {
+                          return buildQuizCard(item);
+                        }).toList(),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/biologi.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Biology Advance - Human to God ",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              )),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Biology Test for UTBK",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nKelvin-Professor UI",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("4.0"),
-                                  SizedBox(width: 5),
-                                  Text("(6057)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/suhu.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Perhitungan Suhu SMP",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Soal-Soal perhitungan Suhu kelas 7",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nmistia-science lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(2157)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/umumscience.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Pengetahuan Umum Sains",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "how Science works?, come and test",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nVanny-BioTech company",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/astro.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Astronomi Calculation advance",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Astronomi for the next level",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nJohn Makar-VIO Company",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("2.0"),
-                                  SizedBox(width: 5),
-                                  Text("(57)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),
@@ -2368,435 +881,28 @@ class _mainMenuState extends State {
               SizedBox(height: 20),
 
               SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/englishlv1.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "English - Elementry Level",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Elementry Level Test ",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nAlexa-UI lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(60257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: _allItems
+                            .where((item) => item.containsKey('quiz'))
+                            .skip(15)
+                            .take(5)
+                            .map((item) {
+                          return buildQuizCard(item);
+                        }).toList(),
                       ),
                     ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(10.0)),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/englishlv2.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "english Advance - Hero to God ",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "english next level Test",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nFaker-UI lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("4.0"),
-                                  SizedBox(width: 5),
-                                  Text("(6057)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/englishlv3.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "English Test for intermedite level",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "Hard Level English Test",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nmax-UI lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(2157)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/englishlv4.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "C1 English Quiz",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "C1 English Test",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nVonna-UINSU lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  SizedBox(width: 5),
-                                  Text("5.0"),
-                                  SizedBox(width: 5),
-                                  Text("(257)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
-                    Container(
-                      margin: EdgeInsets.only(right: 20),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(10.0),
-                            child: Image.asset('../assets/englishlv5.jpeg',
-                                width: 250, height: 100, fit: BoxFit.cover),
-                          ),
-                          SizedBox(height: 20),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "English Test advance 2024",
-                              style: TextStyle(
-                                fontSize: 15,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          SizedBox(height: 5),
-                          Padding(
-                            padding: EdgeInsets.only(left: 10),
-                            child: Text(
-                              "English Test for the next level",
-                              style: TextStyle(fontSize: 15),
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Text(
-                                "Dibuat oleh\nJohn Doe-UI lectture",
-                                style: TextStyle(fontSize: 15),
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                              padding: EdgeInsets.only(left: 10),
-                              child: Row(
-                                children: [
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star, color: Colors.yellow),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  Icon(Icons.star_border),
-                                  SizedBox(width: 5),
-                                  Text("2.0"),
-                                  SizedBox(width: 5),
-                                  Text("(57)"),
-                                ],
-                              )),
-                          SizedBox(height: 10),
-                          Padding(
-                            padding: EdgeInsets.only(left: 13),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.circular(5),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  // Tindakan ketika tombol ditekan
-                                  // Navigasi ke halaman lain
-                                },
-                                child: Text(
-                                  'Start Quiz',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          )
-                        ],
-                      ),
-                    ),
+                    SizedBox(height: 30),
                   ],
                 ),
               ),
               SizedBox(
                 height: 50,
               ),
-
-              
 
               CarouselSlider(
                 options: CarouselOptions(
@@ -2832,11 +938,9 @@ class _mainMenuState extends State {
                 }).toList(),
               ),
 
-              
               SizedBox(
                 height: 50,
               ),
-              
 
               //footer
               Padding(
@@ -2899,8 +1003,6 @@ class _mainMenuState extends State {
             ],
           ),
         ),
-        
-        
       ),
       floatingActionButton: _isVisible
           ? FloatingActionButton(
@@ -2910,5 +1012,285 @@ class _mainMenuState extends State {
             )
           : null,
     );
+  }
+
+  Widget buildCourseCard(Map<String, String> item) {
+    return GestureDetector(
+      child: Card(
+        margin: EdgeInsets.only(right: 20),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: const Color.fromARGB(255, 145, 143, 143))),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(10.0)),
+                  child: Image.asset(
+                    item['image']!,
+                    width: 250,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item['title']!,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        item['subtitle']!,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Dibuat oleh\n${item['author']}',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          for (int i = 0; i < 5; i++)
+                            Icon(
+                              i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Colors.yellow
+                                  : Colors.black,
+                            ),
+                          SizedBox(width: 5),
+                          Text(item['rating'] ?? '0'),
+                          SizedBox(width: 5),
+                          Text(item['reviews'] ?? '0'),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  switch (item['course']) {
+                                    case 'DataCourse':
+                                      return DataCourse();
+                                    case 'AccountingCourse':
+                                      return AccountingCourse();
+                                    case 'EnglishCourse':
+                                      return EnglishCourse();
+                                    case 'InvestCourse':
+                                      return InvestCourse();
+                                    case 'MarketCourse':
+                                      return MarketCourse();
+                                    case 'OfficeCourse':
+                                      return OfficeCourse();
+                                    default:
+                                      return Container();
+                                  }
+                                },
+                              ),
+                            );
+                          },
+                          child: Text(
+                            'Learn Here',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Consumer<FavoriteModel>(
+                builder: (context, favoriteModel, child) {
+                  final isFavorite = favoriteModel.isFavorite(item['title']!);
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite
+                          ? const Color.fromARGB(255, 255, 17, 0)
+                          : Colors.white,
+                    ),
+                    onPressed: () {
+                      if (!isFavorite) {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Added to Favorites!");
+                      } else {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Removed from Favorites!");
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildQuizCard(Map<String, String> item) {
+    return GestureDetector(
+      child: Card(
+        margin: EdgeInsets.only(right: 20),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(color: const Color.fromARGB(255, 145, 143, 143))),
+        child: Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ClipRRect(
+                  borderRadius:
+                      BorderRadius.vertical(top: Radius.circular(10.0)),
+                  child: Image.asset(
+                    item['image']!,
+                    width: 250,
+                    height: 100,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        item['title']!,
+                        style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Text(
+                        item['subtitle']!,
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        'Dibuat oleh\n${item['author']}',
+                        style: TextStyle(fontSize: 15),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          for (int i = 0; i < 5; i++)
+                            Icon(
+                              i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Icons.star
+                                  : Icons.star_border,
+                              color: i <
+                                      (double.tryParse(item['rating'] ?? '0') ??
+                                              0)
+                                          .round()
+                                  ? Colors.yellow
+                                  : Colors.black,
+                            ),
+                          SizedBox(width: 5),
+                          Text(item['rating'] ?? '0'),
+                          SizedBox(width: 5),
+                          Text(item['reviews'] ?? '0'),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: Colors.purple,
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => QuizPage(
+                                        item['quiz']!, item['title']!)));
+                          },
+                          child: Text(
+                            'Start Quiz',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Consumer<FavoriteModel>(
+                builder: (context, favoriteModel, child) {
+                  final isFavorite = favoriteModel.isFavorite(item['title']!);
+                  return IconButton(
+                    icon: Icon(
+                      isFavorite ? Icons.favorite : Icons.favorite_border,
+                      color: isFavorite
+                          ? const Color.fromARGB(255, 255, 17, 0)
+                          : Colors.white,
+                    ),
+                    onPressed: () {
+                      if (!isFavorite) {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Added to Favorites!");
+                      } else {
+                        favoriteModel.toggleFavorite(item);
+                        _showSnackBar(context, "Removed from Favorites!");
+                      }
+                    },
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showSnackBar(BuildContext context, String message) {
+    final snackBar = SnackBar(
+      content: Text(message),
+      duration: Duration(seconds: 2),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
