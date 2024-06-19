@@ -467,13 +467,13 @@ class _mainMenuState extends State {
           ),
           BottomNavigationBarItem(
             icon: Tooltip(
-              message: 'Search',
+              message: 'Favorite',
               child: IconButton(
-                icon: Icon(Icons.search),
+                icon: Icon(Icons.favorite),
                 iconSize: 30,
                 onPressed: () {
                   Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+                      MaterialPageRoute(builder: (context) => Favourite()));
                 },
               ),
             ),
@@ -481,13 +481,13 @@ class _mainMenuState extends State {
           ),
           BottomNavigationBarItem(
             icon: Tooltip(
-              message: 'Favorite',
+              message: 'Search',
               child: IconButton(
-                icon: Icon(Icons.favorite),
+                icon: Icon(Icons.search),
                 iconSize: 30,
                 onPressed: () {
                   Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => Favourite()));
+                      MaterialPageRoute(builder: (context) => CourseAndQuiz()));
                 },
               ),
             ),

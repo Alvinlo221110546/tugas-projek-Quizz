@@ -7,6 +7,7 @@ import 'package:quizz/page/Mainmenu.dart';
 import 'package:quizz/page/camera.dart';
 import 'package:quizz/page/changepassword.dart';
 import 'package:quizz/page/provider/providerUser.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -17,6 +18,7 @@ class _ProfilePageState extends State<ProfilePage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController fullName;
   late TextEditingController phone;
+  late TextEditingController birthDate;
   late TextEditingController status;
   File? _imageFile;
   late CameraController? _controller;
@@ -27,6 +29,7 @@ class _ProfilePageState extends State<ProfilePage> {
     final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
     fullName = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].fullName : '');
     phone = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].phone : '');
+    birthDate = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].birthDate : '');
     status = TextEditingController(text: profileProvider.account.isNotEmpty ? profileProvider.account[0].status : '');
   }
 
@@ -43,9 +46,27 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  Future<void> _selectDate(BuildContext context) async {
+    DateTime? picked = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime(2101),
+    );
+    if (picked != null) {
+      setState(() {
+        birthDate.text = DateFormat('yyyy-MM-dd').format(picked);
+      });
+    }
+  }
+
   @override
   void dispose() {
     _controller?.dispose();
+    fullName.dispose();
+    phone.dispose();
+    birthDate.dispose();
+    status.dispose();
     super.dispose();
   }
 
@@ -74,11 +95,10 @@ class _ProfilePageState extends State<ProfilePage> {
                     radius: 70,
                     backgroundColor: Colors.purple[200],
                     backgroundImage: profileProvider.account.isNotEmpty
-                            ? profileProvider.account[0].profilePicture != null
-                                ? MemoryImage(
-                                    profileProvider.account[0].profilePicture!)
-                                : null
-                            : null,
+                        ? profileProvider.account[0].profilePicture != null
+                            ? MemoryImage(profileProvider.account[0].profilePicture!)
+                            : null
+                        : null,
                   ),
                   Positioned(
                     bottom: 0,
@@ -158,6 +178,25 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                   SizedBox(height: 16.0),
+                  GestureDetector(
+                    onTap: () {
+                      FocusScope.of(context).requestFocus(FocusNode());
+                      _selectDate(context);
+                    },
+                    child: AbsorbPointer(
+                      child: TextFormField(
+                        controller: birthDate,
+                        decoration: InputDecoration(
+                          labelText: 'Birth Date',
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(30.0),
+                          ),
+                          prefixIcon: Icon(Icons.calendar_today),
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
                   Text(
                     'Status:',
                     style: TextStyle(
@@ -210,6 +249,7 @@ class _ProfilePageState extends State<ProfilePage> {
             setState(() {
               profileProvider.changeFullName(0, fullName.text);
               profileProvider.changePhone(0, phone.text);
+              profileProvider.changeBirthDate(0, birthDate.text);
               profileProvider.changeStatus(0, status.text);
               final imageBytes = _imageFile != null ? _imageFile!.readAsBytesSync() : profileProvider.account[0].profilePicture;
               if (imageBytes != null) {
@@ -229,4 +269,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-

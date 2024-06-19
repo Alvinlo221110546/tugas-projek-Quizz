@@ -19,7 +19,7 @@ class Favourite extends StatefulWidget {
 }
 
 class _FavouriteState extends State<Favourite> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
     setState(() {
@@ -197,13 +197,13 @@ class _FavouriteState extends State<Favourite> {
     ),
     BottomNavigationBarItem(
       icon: Tooltip(
-        message: 'Search',
+        message: 'Favorite',
         child: IconButton(
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.favorite),
           iconSize: 30,
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+                MaterialPageRoute(builder: (context) => Favourite()));
           },
         ),
       ),
@@ -211,13 +211,13 @@ class _FavouriteState extends State<Favourite> {
     ),
     BottomNavigationBarItem(
       icon: Tooltip(
-        message: 'Favorite',
+        message: 'Search',
         child: IconButton(
-          icon: Icon(Icons.favorite),
+          icon: Icon(Icons.search),
           iconSize: 30,
           onPressed: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => Favourite()));
+                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
           },
         ),
       ),

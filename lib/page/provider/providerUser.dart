@@ -9,6 +9,7 @@ class Account {
   String email;
   String password;
   String phone;
+  String birthDate; 
   String status;
 
   Account({
@@ -18,6 +19,7 @@ class Account {
     this.email = '',
     this.password = '',
     this.phone = '',
+    this.birthDate = '', 
     this.status = 'No status available',
   });
 }
@@ -47,6 +49,16 @@ class ProfileProvider extends ChangeNotifier {
     for (var a in account) {
       if (a.id == id) {
         a.phone = phone;
+        break;
+      }
+    }
+    notifyListeners();
+  }
+
+  void changeBirthDate(int id, String birthDate) { 
+    for (var a in account) {
+      if (a.id == id) {
+        a.birthDate = birthDate;
         break;
       }
     }

@@ -259,7 +259,7 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
   ];
   List<Map<String, String>> _filteredItems = [];
   final ScrollController _scrollController = ScrollController();
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
   bool _isVisible = false;
 
   void _onItemTapped(int index) {
@@ -412,13 +412,13 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
     ),
     BottomNavigationBarItem(
       icon: Tooltip(
-        message: 'Search',
+        message: 'Favorite',
         child: IconButton(
-          icon: Icon(Icons.search),
+          icon: Icon(Icons.favorite),
           iconSize: 30,
           onPressed: () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+                MaterialPageRoute(builder: (context) => Favourite()));
           },
         ),
       ),
@@ -426,13 +426,13 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
     ),
     BottomNavigationBarItem(
       icon: Tooltip(
-        message: 'Favorite',
+        message: 'Search',
         child: IconButton(
-          icon: Icon(Icons.favorite),
+          icon: Icon(Icons.search),
           iconSize: 30,
           onPressed: () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => Favourite()));
+                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
           },
         ),
       ),
