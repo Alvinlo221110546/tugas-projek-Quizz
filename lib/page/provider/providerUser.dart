@@ -23,9 +23,7 @@ class Account {
 }
 
 class ProfileProvider extends ChangeNotifier {
-  List<Account> account = [
-  
-  ];
+  List<Account> account = [];
 
   get profilePicture => null;
 
@@ -65,7 +63,6 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
- 
   void changeProfilePicture(int index, Uint8List imageBytes) {
     if (account.isNotEmpty) {
       account[index].profilePicture = imageBytes;
@@ -73,7 +70,7 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void changePassword(int id, String oldPass, String newPass){
+  void changePassword(int id, String oldPass, String newPass) {
     for (var a in account) {
       if (a.id == id) {
         if (a.password == oldPass) {
@@ -85,18 +82,13 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  
-  void forgotPassword(int id, String newPass){
+  void forgotPassword(int id, String newPass) {
     for (var a in account) {
       if (a.id == id) {
-        if (a.password == newPass) {
-          a.password = newPass;
-          break;
-        }
+        a.password = newPass;
+        break;
       }
     }
     notifyListeners();
   }
-
-  
 }

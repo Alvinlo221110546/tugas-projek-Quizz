@@ -290,7 +290,6 @@ class _mainMenuState extends State {
       'quiz': 'nextlvlquiz'
     }
   ];
-  List<Map<String, String>> _filteredItems = [];
   final ScrollController _scrollController = ScrollController();
   int _selectedIndex = 0;
   bool _isVisible = false;
