@@ -1,8 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/link.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
+
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class InvestCourse extends StatelessWidget {
+class InvestCourse extends StatefulWidget {
+  @override
+  _InvestCourse createState() => _InvestCourse();
+}
+
+class _InvestCourse extends State {
+
+  final String downloadLink = "https://UPPSKILL.com";
+
+  void _shareLink() async {
+    try {
+      String message = 'Download our app using this link: $downloadLink';
+      await Share.share(message);
+    } catch (error) {
+      print('Error sharing link: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error sharing link: $error')),
+      );
+    }
+  }
+
+  void _copyLink() {
+    Clipboard.setData(ClipboardData(text: downloadLink));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Download link copied to clipboard!')),
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -11,13 +39,37 @@ class InvestCourse extends StatelessWidget {
           backgroundColor: Colors.purple,
           title: Text('Investment Course', style: TextStyle(color: Colors.white)),
           actions: [
-            IconButton(
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => LinkPage()));
-                },
-                icon: Icon(Icons.share))
-          ]),
+          PopupMenuButton<String>(
+            onSelected: (String result) {
+              switch (result) {
+                case 'Copy Link':
+                  _copyLink();
+                  break;
+                case 'Share Link':
+                  _shareLink();
+                  break;
+                
+              }
+            },
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'Copy Link',
+                child: ListTile(
+                  leading: Icon(Icons.copy),
+                  title: Text('Copy Link'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'Share Link',
+                child: ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Share Link'),
+                ),
+              ),
+              
+            ],
+          ),
+        ],),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(20.0),

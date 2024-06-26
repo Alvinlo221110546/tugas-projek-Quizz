@@ -1,21 +1,73 @@
 import 'package:flutter/material.dart';
-import 'package:quizz/page/link.dart';
+import 'package:flutter/services.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class EnglishCourse extends StatelessWidget {
+class EnglishCourse extends StatefulWidget {
+  @override
+  _EnglishCourse createState() => _EnglishCourse();
+}
+
+class _EnglishCourse extends State {
+  
   @override
   Widget build(BuildContext context) {
+
+    final String downloadLink = "https://UPPSKILL.com";
+
+  void _shareLink() async {
+    try {
+      String message = 'Download our app using this link: $downloadLink';
+      await Share.share(message);
+    } catch (error) {
+      print('Error sharing link: $error');
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error sharing link: $error')),
+      );
+    }
+  }
+
+  void _copyLink() {
+    Clipboard.setData(ClipboardData(text: downloadLink));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Download link copied to clipboard!')),
+    );
+  }
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
         backgroundColor: Colors.purple,
         title: Text('English Course', style: TextStyle(color: Colors.white)),
-        actions: [
-          IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => LinkPage()));
+         actions: [
+          PopupMenuButton<String>(
+            onSelected: (String result) {
+              switch (result) {
+                case 'Copy Link':
+                  _copyLink();
+                  break;
+                case 'Share Link':
+                  _shareLink();
+                  break;
+                
+              }
             },
-            icon: Icon(Icons.share),
+            itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+              const PopupMenuItem<String>(
+                value: 'Copy Link',
+                child: ListTile(
+                  leading: Icon(Icons.copy),
+                  title: Text('Copy Link'),
+                ),
+              ),
+              const PopupMenuItem<String>(
+                value: 'Share Link',
+                child: ListTile(
+                  leading: Icon(Icons.share),
+                  title: Text('Share Link'),
+                ),
+              ),
+              
+            ],
           ),
         ],
       ),
