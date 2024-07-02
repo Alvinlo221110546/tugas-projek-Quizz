@@ -262,8 +262,12 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
   int _selectedIndex = 2;
   bool _isVisible = false;
 
+  final DataNavigate = [MainMenu(), Favourite(), CourseAndQuiz()];
+
   void _onItemTapped(int index) {
     _selectedIndex = index;
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DataNavigate[index]));
     setState(() {});
   }
 
@@ -395,55 +399,39 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
       ),
       drawer: DashboardModal(),
       bottomNavigationBar: BottomNavigationBar(
-  items: <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Home',
-        child: IconButton(
-          icon: Icon(Icons.home),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MainMenu()));
-          },
-        ),
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Tooltip(
+                message: 'Home',
+                child: Icon(
+                  Icons.home,
+                  size: 30,
+                )),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Tooltip(
+                message: 'Favorite',
+                child: Icon(
+                  Icons.favorite,
+                  size: 30,
+                )),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Tooltip(
+                message: 'Search',
+                child: Icon(
+                  Icons.search,
+                  size: 30,
+                )),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.purple,
+        onTap: _onItemTapped,
       ),
-      label: '', 
-    ),
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Favorite',
-        child: IconButton(
-          icon: Icon(Icons.favorite),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Favourite()));
-          },
-        ),
-      ),
-      label: '', 
-    ),
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Search',
-        child: IconButton(
-          icon: Icon(Icons.search),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
-          },
-        ),
-      ),
-      label: '', 
-    ),
-  ],
-  currentIndex: _selectedIndex,
-  selectedItemColor: Colors.purple,
-  onTap: _onItemTapped,
-),
-
       body: SingleChildScrollView(
         controller: _scrollController,
         child: Padding(
@@ -750,11 +738,11 @@ class _CourseAndQuizState extends State<CourseAndQuiz> {
                         ),
                         child: TextButton(
                           onPressed: () {
-                              Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>
-                                    QuizPage(item['quiz']!, item['title']!)));
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => QuizPage(
+                                        item['quiz']!, item['title']!)));
                           },
                           child: Text(
                             'Start Quiz',
