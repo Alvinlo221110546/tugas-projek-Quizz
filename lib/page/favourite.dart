@@ -21,10 +21,13 @@ class Favourite extends StatefulWidget {
 class _FavouriteState extends State<Favourite> {
   int _selectedIndex = 1;
 
+  final DataNavigate = [MainMenu(), Favourite(), CourseAndQuiz()];
+
   void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    _selectedIndex = index;
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => DataNavigate[index]));
+    setState(() {});
   }
 
   @override
@@ -183,44 +186,29 @@ class _FavouriteState extends State<Favourite> {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Tooltip(
-              message: 'Home',
-              child: IconButton(
-                icon: Icon(Icons.home),
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => MainMenu()));
-                },
-              ),
-            ),
+                message: 'Home',
+                child: Icon(
+                  Icons.home,
+                  size: 30,
+                )),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Tooltip(
-              message: 'Favorite',
-              child: IconButton(
-                icon: Icon(Icons.favorite),
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => Favourite()));
-                },
-              ),
-            ),
+                message: 'Favorite',
+                child: Icon(
+                  Icons.favorite,
+                  size: 30,
+                )),
             label: '',
           ),
           BottomNavigationBarItem(
             icon: Tooltip(
-              message: 'Search',
-              child: IconButton(
-                icon: Icon(Icons.search),
-                iconSize: 30,
-                onPressed: () {
-                  Navigator.pushReplacement(context,
-                      MaterialPageRoute(builder: (context) => CourseAndQuiz()));
-                },
-              ),
-            ),
+                message: 'Search',
+                child: Icon(
+                  Icons.search,
+                  size: 30,
+                )),
             label: '',
           ),
         ],
