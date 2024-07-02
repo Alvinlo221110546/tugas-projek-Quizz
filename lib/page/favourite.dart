@@ -179,56 +179,55 @@ class _FavouriteState extends State<Favourite> {
         },
       ),
       drawer: DashboardModal(),
-         bottomNavigationBar: BottomNavigationBar(
-  items: <BottomNavigationBarItem>[
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Home',
-        child: IconButton(
-          icon: Icon(Icons.home),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => MainMenu()));
-          },
-        ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Tooltip(
+              message: 'Home',
+              child: IconButton(
+                icon: Icon(Icons.home),
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => MainMenu()));
+                },
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Tooltip(
+              message: 'Favorite',
+              child: IconButton(
+                icon: Icon(Icons.favorite),
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Favourite()));
+                },
+              ),
+            ),
+            label: '',
+          ),
+          BottomNavigationBarItem(
+            icon: Tooltip(
+              message: 'Search',
+              child: IconButton(
+                icon: Icon(Icons.search),
+                iconSize: 30,
+                onPressed: () {
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => CourseAndQuiz()));
+                },
+              ),
+            ),
+            label: '',
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        selectedItemColor: Colors.purple,
+        onTap: _onItemTapped,
       ),
-      label: '', 
-    ),
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Favorite',
-        child: IconButton(
-          icon: Icon(Icons.favorite),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => Favourite()));
-          },
-        ),
-      ),
-      label: '', 
-    ),
-    BottomNavigationBarItem(
-      icon: Tooltip(
-        message: 'Search',
-        child: IconButton(
-          icon: Icon(Icons.search),
-          iconSize: 30,
-          onPressed: () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => CourseAndQuiz()));
-          },
-        ),
-      ),
-      label: '', 
-    ),
-  ],
-  currentIndex: _selectedIndex,
-  selectedItemColor: Colors.purple,
-  onTap: _onItemTapped,
-),
-
     );
   }
 
@@ -309,9 +308,7 @@ class _FavouriteState extends State<Favourite> {
                 borderRadius: BorderRadius.circular(5),
               ),
               child: TextButton(
-                onPressed: () {
-                
-                },
+                onPressed: () {},
                 child: Text(
                   'Start Quiz',
                   style: TextStyle(
