@@ -39,7 +39,7 @@ class _AboutUsState extends State<AboutUs> {
 
   void _startAnimations() async {
     for (int i = 0; i < names.length; i++) {
-      await Future.delayed(Duration(milliseconds: 500));
+      await Future.delayed(Duration(milliseconds: 300));
       _listKey.currentState!.insertItem(i);
     }
   }
