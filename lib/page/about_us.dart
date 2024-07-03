@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class AboutUs extends StatefulWidget {
@@ -61,13 +60,22 @@ class _AboutUsState extends State<AboutUs> {
         ),
         iconTheme: IconThemeData(color: Colors.white),
       ),
-      body: AnimatedList(
-        key: _listKey,
-        initialItemCount: 0,
-        itemBuilder: (context, index, animation) {
-          return _buildListItem(names[index], additionalInfo[index],
-              avatarImages[index], animation, index);
-        },
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.purple, Colors.pink],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: AnimatedList(
+          key: _listKey,
+          initialItemCount: 0,
+          itemBuilder: (context, index, animation) {
+            return _buildListItem(names[index], additionalInfo[index],
+                avatarImages[index], animation, index);
+          },
+        ),
       ),
     );
   }
@@ -83,7 +91,7 @@ class _AboutUsState extends State<AboutUs> {
         );
       },
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
         child: _ListItem(
           key: _itemKeys[index],
           name: name,
@@ -112,18 +120,16 @@ class _ListItem extends StatefulWidget {
 }
 
 class _ListItemState extends State<_ListItem> {
-  
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 3,
+            color: Colors.grey.withOpacity(0.3),
+            spreadRadius: 2,
             blurRadius: 5,
             offset: Offset(0, 3),
           ),
@@ -137,14 +143,14 @@ class _ListItemState extends State<_ListItem> {
             child: Row(
               children: [
                 CircleAvatar(
-                  radius: 20,
+                  radius: 30,
                   backgroundImage: AssetImage(widget.avatarImage),
                 ),
                 SizedBox(width: 16),
                 Text(
                   widget.name,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: 22,
                     fontWeight: FontWeight.bold,
                     color: Colors.purple,
                   ),
@@ -152,13 +158,19 @@ class _ListItemState extends State<_ListItem> {
               ],
             ),
           ),
+          Divider(
+            color: Colors.grey,
+            thickness: 1,
+            indent: 16,
+            endIndent: 16,
+          ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: const EdgeInsets.all(16.0),
             child: Text(
               widget.additionalInfo,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.black,
+                color: Colors.black54,
               ),
             ),
           ),
