@@ -1,16 +1,43 @@
-# quiz
+# 📱 Quiz App Frontend – Flutter Project
 
-A new Flutter project.
+Aplikasi Flutter ini merupakan bagian dari pengembangan **aplikasi e-learning interaktif** berbasis kuis. Pengguna dapat mengikuti kursus, menjawab pertanyaan, melihat skor akhir, dan mengelola profil mereka dengan UI yang responsif dan mendukung berbagai platform (Android, iOS, Web, Desktop).
 
-## Getting Started
+---
 
-This project is a starting point for a Flutter application.
+## 🧩 Fitur Utama
 
-A few resources to get you started if this is your first Flutter project:
+- 📚 Tampilan materi kursus berdasarkan kategori (accounting, english, marketing, dll.)
+- ❓ Halaman kuis (soal pilihan ganda)
+- ✅ Evaluasi skor kuis dan halaman hasil
+- 🧑‍💻 Halaman profil pengguna
+- 🔐 Fitur login, register, lupa password
+- 🎨 Mode gelap (Dark Mode Support)
+- 📅 Date picker untuk data profil
+- 🧠 State management menggunakan Provider
+- ⚙️ Modularisasi berdasarkan folder `page/`, `provider/`, dan `coursehall_2/`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+---
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📂 Struktur Folder Penting
+
+```bash
+lib/
+ ┣ 📁 page/
+ ┃ ┣ 📁 coursehall_2/          # Semua materi kursus (accounting, marketing, etc.)
+ ┃ ┣ 📁 provider/              # Provider untuk dark mode, user, score, dll
+ ┃ ┣ 📄 Mainmenu.dart          # Menu utama
+ ┃ ┣ 📄 about_us.dart          # Tentang aplikasi
+ ┃ ┣ 📄 loginpage.dart         # Halaman login
+ ┃ ┣ 📄 register_page.dart     # Halaman registrasi
+ ┃ ┣ 📄 quiz_page.dart         # Halaman kuis
+ ┃ ┣ 📄 final_score_page.dart  # Halaman skor akhir
+ ┃ ┗ 📄 profile_page.dart      # Halaman profil pengguna
+ ┗ 📄 main.dart                # Entry point aplikasi
+🚀 Cara Menjalankan Proyek
+Pastikan kamu sudah menginstal Flutter SDK. Kemudian jalankan:
+
+bash
+Copy
+Edit
+flutter pub get
+flutter run
